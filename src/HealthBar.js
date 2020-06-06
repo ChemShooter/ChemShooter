@@ -18,7 +18,7 @@ export default class HealthBar {
 
     if (this.health < 0)
 			this.health = 0;
-    
+
 		this.draw()
     return (this.health === 0);
 	}
@@ -29,6 +29,7 @@ export default class HealthBar {
 	}
 
   draw () {
+	  console.log(this.x, this.y);
 		this.healthBar.clear();
 
     this.healthBar.fillStyle(0x000000);
