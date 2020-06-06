@@ -58,6 +58,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
     this.stuffLayer = map.createBlankDynamicLayer("Stuff", oldTileset);
+    this.wallGroup = this.physics.add.staticGroup();
     const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
@@ -77,10 +78,10 @@ export default class DungeonScene extends Phaser.Scene {
       this.wallLayer.putTilesAt(TILES.WALL.BOTTOM_LEFT, left, bottom - 1);
       this.wallLayer.putTilesAt(TILES.WALL.BOTTOM_RIGHT, right, bottom - 1);
 
-      this.wallLayer.weightedRandomize(x + 1, y, width - 2, 1, TILES.WALL.TOP.TOP_HALF);
-      this.wallLayer.weightedRandomize(x + 1, y + 1, width - 2, 1, TILES.WALL.TOP.BOTTOM_HALF);
-      this.wallLayer.weightedRandomize(x + 1, y + height - 2, width - 2, 1, TILES.WALL.TOP.TOP_HALF);
-      this.wallLayer.weightedRandomize(x + 1, y + height - 1, width - 2, 1, TILES.WALL.TOP.BOTTOM_HALF);
+      for (let offsetX = 1; offsetX < width - 1; ++offsetX) {
+        this.wallLayer.putTilesAt(TILES.WALL.TOP, left + offsetX, top);
+        this.wallLayer.putTilesAt(TILES.WALL.TOP, left + offsetX, bottom - 1);
+      }
 
       for (let offsetY = 2; offsetY < height - 2; ++offsetY) {
         this.wallLayer.putTileAt(TILES.WALL.LEFT, left, top + offsetY);
@@ -142,8 +143,12 @@ export default class DungeonScene extends Phaser.Scene {
 
     // Not exactly correct for the tileset since there are more possible floor tiles, but this will
     // do for the example.
-    this.groundLayer.setCollisionByExclusion([-1, 6, 7, 8, 26, 51, 52, 53]);
+    this.groundLayer.setCollisionByExclusion([41, 42]);
+    this.wallLayer.setCollisionByExclusion([-1, 41]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
+
+    this.wallLayer.forEachTile(tile => {
+    });
 
     this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {
       this.stuffLayer.setTileIndexCallback(TILES.STAIRS, null);

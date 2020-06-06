@@ -21,10 +21,10 @@ const TILE_MAPPING = {
       [93],
       [103]
     ],
-    TOP: {
-      TOP_HALF: [{ index: 1, weight: 2 }, { index: [2, 3], weight: 1 }],
-      BOTTOM_HALF: [{ index: [12], weight: 1}]
-    },
+    TOP: [
+      [1],
+      [12]
+    ],
     LEFT: 81,
     RIGHT: 80,
     BOTTOM: [{ index: 1, weight: 4 }, { index: [78, 79, 80], weight: 1 }]
