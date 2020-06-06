@@ -1,18 +1,20 @@
-export default class Enemy {
+import Phaser from 'phaser';
+
+export default class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
-    this.scene = scene;
+    super(scene, x, y);
 
     const anims = scene.anims;
     anims.create({
       key: "enemy-walk",
-      frames: anims.generateFrameNumbers("characters", { start: 5, end: 8 }),
+      frames: anims.generateFrameNumbers("characters", { start: 9, end: 12 }),
       frameRate: 8,
       repeat: -1
     });
 
     anims.create({
-      key: 'player-idle',
-      frames: anims.generateFrameNumbers('characters', { start: 0, end: 3 }),
+      key: 'enemy-idle',
+      frames: anims.generateFrameNumbers('characters', { start: 13, end: 16 }),
       frameRate: 8,
       repeat: -1
     })
@@ -20,15 +22,10 @@ export default class Enemy {
     this.sprite = scene.physics.add
       .sprite(x, y, "characters", 0)
       .setSize(16, 16)
-      .setOffset(0, 16);
+      .setOffset(0, 16)
+      .setVelocity(0.5, 0.5);
 
-    this.sprite.anims.play("player-walk");
-
-    this.keys = this.scene.input.keyboard.createCursorKeys();
-  }
-
-  freeze() {
-    this.sprite.body.moves = false;
+    this.sprite.anims.play("enemy-walk");
   }
 
   update() {
@@ -60,9 +57,9 @@ export default class Enemy {
 
     // Update the animation last and give left/right/down animations precedence over up animations
     if (keys.left.isDown || keys.right.isDown || keys.down.isDown || keys.up.isDown) {
-      sprite.anims.play("player-walk", true);
+      sprite.anims.play("enemy-walk", true);
     } else {
-      sprite.anims.play('player-idle', true);
+      sprite.anims.play('enemy-idle', true);
     }
   }
 

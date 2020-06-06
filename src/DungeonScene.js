@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Dungeon from "@mikewesthad/dungeon";
 import Player from "./Player.js";
+import Enemy from './Enemy';
 import TILES from "./TileMapping.js";
 import TilemapVisibility from "./TilemapVisibility.js";
 
@@ -73,7 +74,7 @@ export default class DungeonScene extends Phaser.Scene {
     const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
     shadowLayer.setDepth(2);
 
-    this.enemyGroup = this.physics.add.staticGroup();
+    this.enemyGroup = this.physics.add.group();
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
 
@@ -127,14 +128,22 @@ export default class DungeonScene extends Phaser.Scene {
     const rooms = this.dungeon.rooms.slice();
     const startRoom = rooms.shift();
     const endRoom = Phaser.Utils.Array.RemoveRandomElement(rooms);
-    const otherRooms = Phaser.Utils.Array.Shuffle(rooms).slice(0, rooms.length * 0.9);
+    const otherRooms = Phaser.Utils.Array.Shuffle(rooms);
 
     // Place the stairs
     this.stuffLayer.putTileAt(TILES.STAIRS, endRoom.centerX, endRoom.centerY);
 
-    // Place stuff in the 90% "otherRooms"
     otherRooms.forEach(room => {
-      var rand = Math.random();
+      const enemyX = map.tileToWorldX(room.centerX - 3);
+      const enemyY = map.tileToWorldX(room.centerY - 3);
+      // Put enemies in room
+      const enemy = new Enemy(this, enemyX, enemyY);
+      this.enemyGroup.add(enemy);
+      this.physics.add.collider(enemy.sprite, this.wallGroup);
+      this.physics.add.collider(enemy.sprite, this.wallLayer);
+      this.physics.add.collider(enemy.sprite, this.stuffLayer);
+
+      const rand = Math.random();
       if (rand <= 0.25) {
         // 25% chance of chest
         this.stuffLayer.putTileAt(TILES.CHEST, room.centerX, room.centerY);
@@ -157,8 +166,6 @@ export default class DungeonScene extends Phaser.Scene {
       }
     });
 
-    // Not exactly correct for the tileset since there are more possible floor tiles, but this will
-    // do for the example.
     this.groundLayer.setCollisionByExclusion([41, 42]);
     this.wallLayer.setCollisionByExclusion([-1, 0, 41, 80, 81, 72, 73, 1]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26, 55]);
@@ -189,6 +196,7 @@ export default class DungeonScene extends Phaser.Scene {
         this.scene.restart();
       });
     });
+
 
     // Place the player in the first room
     const playerRoom = startRoom;
@@ -221,7 +229,6 @@ export default class DungeonScene extends Phaser.Scene {
 
   update(time, delta) {
     if (this.hasPlayerReachedStairs) return;
-
     this.player.update();
 
     // Find the player's room using another helper method from the dungeon that converts from
@@ -231,5 +238,22 @@ export default class DungeonScene extends Phaser.Scene {
     const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY);
 
     this.tilemapVisibility.setActiveRoom(playerRoom);
+
+    this.enemyGroup.getChildren().forEach((enemy) => {
+      const enemyX = enemy.sprite.x;
+      const enemyY = enemy.sprite.y;
+      const enemyTileX = this.groundLayer.worldToTileX(enemyX);
+      const enemyTileY = this.groundLayer.worldToTileY(enemyY);
+      if (this.dungeon.getRoomAt(enemyTileX, enemyTileY) !== playerRoom) return;
+      const playerX = this.player.sprite.x;
+      const playerY = this.player.sprite.y;
+      const distance = Phaser.Math.Distance.Between(playerX, playerY, enemyX, enemyY);
+      if (distance < 200) {
+        enemy.rotation = Phaser.Math.Angle.Between(enemyX, enemyY, playerX, playerY);
+        this.physics.velocityFromRotation(enemy.rotation, 50, enemy.sprite.body.velocity);
+      } else {
+        this.physics.velocityFromRotation(enemy.rotation, 0, enemy.sprite.body.velocity);
+      }
+    });
   }
 }

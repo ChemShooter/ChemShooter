@@ -5,9 +5,11 @@
  */
 
 import Bullet from './Bullet.js';
+import Phaser from "phaser";
 
-export default class Player {
+export default class Player extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
+    super(scene, x, y);
     this.scene = scene;
 
     const anims = scene.anims;
