@@ -14,15 +14,14 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("tiles", "../assets/tilesets/buch-tileset-48px-extruded.png");
+    this.load.image("mytiles", "../assets/tilesets/buch-tileset-48px-extruded.png");
+    this.load.image("tiles", "../assets/tilesets/dungeon.png" );
     this.load.spritesheet(
       "characters",
-      "../assets/spritesheets/buch-characters-64px-extruded.png",
+      "../assets/spritesheets/characters.png",
       {
-        frameWidth: 64,
-        frameHeight: 64,
-        margin: 1,
-        spacing: 2
+        frameWidth: 16,
+        frameHeight: 32
       }
     );
   }
@@ -45,19 +44,21 @@ export default class DungeonScene extends Phaser.Scene {
       }
     });
 
-    this.dungeon.drawToConsole();
+    this.dungeon.drawToConsole({});
 
     // Creating a blank tilemap with dimensions matching the dungeon
     const map = this.make.tilemap({
-      tileWidth: 48,
-      tileHeight: 48,
+      tileWidth: 16,
+      tileHeight: 16,
       width: this.dungeon.width,
       height: this.dungeon.height
     });
-    const tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
+    const oldTileset = map.addTilesetImage("mytiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
+    const tileset = map.addTilesetImage('tiles', null, 16, 16);
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
-    this.stuffLayer = map.createBlankDynamicLayer("Stuff", tileset);
-    const shadowLayer = map.createBlankDynamicLayer("Shadow", tileset).fill(TILES.BLANK);
+    this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
+    this.stuffLayer = map.createBlankDynamicLayer("Stuff", oldTileset);
+    const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
 
@@ -68,7 +69,7 @@ export default class DungeonScene extends Phaser.Scene {
 
       // Fill the floor with mostly clean tiles, but occasionally place a dirty tile
       // See "Weighted Randomize" example for more information on how to use weightedRandomize.
-      this.groundLayer.weightedRandomize(x + 1, y + 1, width - 2, height - 2, TILES.FLOOR);
+      this.groundLayer.weightedRandomize(x, y + 2, width, height - 2, TILES.FLOOR);
 
       // Place the room corners tiles
       this.groundLayer.putTileAt(TILES.WALL.TOP_LEFT, left, top);
@@ -76,11 +77,13 @@ export default class DungeonScene extends Phaser.Scene {
       this.groundLayer.putTileAt(TILES.WALL.BOTTOM_RIGHT, right, bottom);
       this.groundLayer.putTileAt(TILES.WALL.BOTTOM_LEFT, left, bottom);
 
-      // Fill the walls with mostly clean tiles, but occasionally place a dirty tile
-      this.groundLayer.weightedRandomize(left + 1, top, width - 2, 1, TILES.WALL.TOP);
-      this.groundLayer.weightedRandomize(left + 1, bottom, width - 2, 1, TILES.WALL.BOTTOM);
-      this.groundLayer.weightedRandomize(left, top + 1, 1, height - 2, TILES.WALL.LEFT);
-      this.groundLayer.weightedRandomize(right, top + 1, 1, height - 2, TILES.WALL.RIGHT);
+      this.wallLayer.weightedRandomize(x, y, width, 1, TILES.WALL.TOP.TOP_HALF);
+      this.wallLayer.weightedRandomize(x, y + 1, width, 1, TILES.WALL.TOP.BOTTOM_HALF);
+
+      for (let offsetY = 1; offsetY < height; ++offsetY) {
+        this.wallLayer.putTileAt(TILES.WALL.LEFT, left, top + offsetY);
+        this.wallLayer.putTileAt(TILES.WALL.RIGHT, right, top + offsetY);
+      }
 
       // Dungeons have rooms that are connected with doors. Each door has an x & y relative to the
       // room's location
@@ -137,7 +140,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     // Not exactly correct for the tileset since there are more possible floor tiles, but this will
     // do for the example.
-    this.groundLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
+    this.groundLayer.setCollisionByExclusion([-1, 6, 7, 8, 26, 51, 52, 53]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
 
     this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {

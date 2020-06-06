@@ -9,12 +9,15 @@ const TILE_MAPPING = {
     TOP_RIGHT: 4,
     BOTTOM_RIGHT: 23,
     BOTTOM_LEFT: 22,
-    TOP: [{ index: 39, weight: 4 }, { index: [57, 58, 59], weight: 1 }],
-    LEFT: [{ index: 21, weight: 4 }, { index: [76, 95, 114], weight: 1 }],
-    RIGHT: [{ index: 19, weight: 4 }, { index: [77, 96, 115], weight: 1 }],
+    TOP: {
+      TOP_HALF: [{ index: 1, weight: 2 }, { index: [2, 3], weight: 1 }],
+      BOTTOM_HALF: [{ index: 11, weight: 2}, { index: [12, 13], weight: 1}]
+    },
+    LEFT: 81,
+    RIGHT: 80,
     BOTTOM: [{ index: 1, weight: 4 }, { index: [78, 79, 80], weight: 1 }]
   },
-  FLOOR: [{ index: 6, weight: 9 }, { index: [7, 8, 26], weight: 1 }],
+  FLOOR: [{ index: 51, weight: 9 }, { index: [52, 53], weight: 1 }],
   POT: [{ index: 13, weight: 1 }, { index: 32, weight: 1 }, { index: 51, weight: 1 }],
   DOOR: {
     TOP: [40, 6, 38],

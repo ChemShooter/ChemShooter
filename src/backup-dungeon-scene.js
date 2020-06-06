@@ -11,7 +11,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('tiles', 'assets/tilesets/dungeon.png');
+    this.load.image('mytiles', 'assets/tilesets/dungeon.png');
     this.load.spritesheet(
       'characters',
       'assets/spritesheets/characters.png',
@@ -45,7 +45,7 @@ export default class DungeonScene extends Phaser.Scene {
       height: this.dungeon.height
     });
 
-    const tileset = map.addTilesetImage('tiles', null, 16, 16, 0, 0);
+    const tileset = map.addTilesetImage('mytiles', null, 16, 16, 0, 0);
     this.groundLayer = map.createBlankDynamicLayer('Ground', tileset).fill(Tiles.BLANK);
     this.wallLayer = map.createBlankDynamicLayer('Wall', tileset);
     this.stuffLayer = map.createBlankDynamicLayer('Stuff', tileset);
