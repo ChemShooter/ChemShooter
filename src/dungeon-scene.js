@@ -14,6 +14,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.image("mytiles", "../assets/tilesets/buch-tileset-48px-extruded.png");
     this.load.image("tiles", "../assets/tilesets/dungeon.png" );
     this.load.image('wall-left', 'assets/tilesets/frames/wall_side_mid_left.png');
     this.load.image('wall-right', 'assets/tilesets/frames/wall_side_mid_right.png');
@@ -60,7 +61,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
     this.stuffLayer = map.createBlankDynamicLayer("Stuff", oldTileset);
-    const shadowLayer = map.createBlankDynamicLayer("Shadow", tileset).fill(TILES.BLANK);
+    const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
 
@@ -145,7 +146,7 @@ export default class DungeonScene extends Phaser.Scene {
     // Not exactly correct for the tileset since there are more possible floor tiles, but this will
     // do for the example.
     this.groundLayer.setCollisionByExclusion([41, 42]);
-    this.wallLayer.setCollisionByExclusion([-1, 41]);
+    this.wallLayer.setCollisionByExclusion([-1, 41, 80, 81]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
 
     this.wallLayer.forEachTile(tile => {
@@ -154,14 +155,12 @@ export default class DungeonScene extends Phaser.Scene {
         const y = tile.getCenterY();
         let wall;
         if (tile.index === TILES.WALL.LEFT) {
-          wall = this.wallGroup.create(x, y, 'wall-right');
+          wall = this.wallGroup.create(x, y, 'wall-right', 0, false);
           wall.body.setSize(4, 16).setOffset(0, 0);
         } else {
-          wall = this.wallGroup.create(x, y, 'wall-left');
+          wall = this.wallGroup.create(x, y, 'wall-left', 0, false);
           wall.body.setOffset(12, 0);
         }
-
-        this.wallLayer.removeTileAt(tile.x, tile.y);
       }
     });
 
