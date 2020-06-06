@@ -331,6 +331,9 @@ export default class DungeonScene extends Phaser.Scene {
       } else {
         this.physics.velocityFromRotation(enemy.rotation, 0, enemy.sprite.body.velocity);
       }
+
+			// Update enemy's health bar
+			enemy.update();
     });
   }
 }
