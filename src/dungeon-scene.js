@@ -26,6 +26,7 @@ export default class DungeonScene extends Phaser.Scene {
         frameHeight: 32
       }
     );
+		this.load.image('bullet', 'assets/tilesets/bullet.png');
   }
 
   create() {
