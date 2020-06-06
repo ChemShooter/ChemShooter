@@ -34,10 +34,12 @@ export default class DungeonScene extends Phaser.Scene {
     this.level++;
     this.hasPlayerReachedStairs = false;
 
+    /*
     this.input.on('pointerdown', function() {
       this.scene.pause();
       this.scene.launch('PauseScene');
     }, this);
+     */
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
@@ -133,6 +135,17 @@ export default class DungeonScene extends Phaser.Scene {
     // Place the stairs
     this.stuffLayer.putTileAt(TILES.STAIRS, endRoom.centerX, endRoom.centerY);
 
+    // Place the player in the first room
+    const playerRoom = startRoom;
+    const x = map.tileToWorldX(playerRoom.centerX);
+    const y = map.tileToWorldY(playerRoom.centerY);
+    this.player = new Player(this, x, y);
+
+    // Watch the player and tilemap layers for collisions, for the duration of the scene:
+    this.physics.add.collider(this.player.sprite, this.wallLayer);
+    this.physics.add.collider(this.player.sprite, this.stuffLayer);
+    this.physics.add.collider(this.player.sprite, this.wallGroup);
+
     otherRooms.forEach(room => {
       const enemyX = map.tileToWorldX(room.centerX - 3);
       const enemyY = map.tileToWorldX(room.centerY - 3);
@@ -142,6 +155,8 @@ export default class DungeonScene extends Phaser.Scene {
       this.physics.add.collider(enemy.sprite, this.wallGroup);
       this.physics.add.collider(enemy.sprite, this.wallLayer);
       this.physics.add.collider(enemy.sprite, this.stuffLayer);
+      this.physics.add.collider(enemy.sprite, this.player.sprite, () => {
+      });
 
       const rand = Math.random();
       if (rand <= 0.25) {
@@ -198,17 +213,6 @@ export default class DungeonScene extends Phaser.Scene {
     });
 
 
-    // Place the player in the first room
-    const playerRoom = startRoom;
-    const x = map.tileToWorldX(playerRoom.centerX);
-    const y = map.tileToWorldY(playerRoom.centerY);
-    this.player = new Player(this, x, y);
-
-    // Watch the player and tilemap layers for collisions, for the duration of the scene:
-    this.physics.add.collider(this.player.sprite, this.wallLayer);
-    this.physics.add.collider(this.player.sprite, this.stuffLayer);
-    this.physics.add.collider(this.player.sprite, this.wallGroup);
-
     // Phaser supports multiple cameras, but you can access the default camera like this:
     const camera = this.cameras.main;
 
@@ -259,7 +263,7 @@ export default class DungeonScene extends Phaser.Scene {
 					    bullet.body.velocity.x = -speed*Math.sin(direction);
 							bullet.body.velocity.y = -speed*Math.cos(direction);
 				  }
-	
+
 			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointerX, pointerY);
 			  }
 	}

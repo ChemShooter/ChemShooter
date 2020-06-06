@@ -7,7 +7,7 @@
 import Bullet from './Bullet.js';
 import Phaser from "phaser";
 
-export default class Player extends Phaser.GameObjects.Sprite {
+export default class Player extends Phaser.GameObjects.GameObject {
   constructor(scene, x, y) {
     super(scene, x, y);
     this.scene = scene;
@@ -15,7 +15,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     const anims = scene.anims;
     anims.create({
       key: "player-walk",
-      frames: anims.generateFrameNumbers("characters", { start: 5, end: 8 }),
+      frames: anims.generateFrameNumbers("characters", { start: 4, end: 7 }),
       frameRate: 8,
       repeat: -1
     });
