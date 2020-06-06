@@ -54,6 +54,7 @@ export default class DungeonScene extends Phaser.Scene {
     .setDepth(3)
     .setOrigin(1, 0)
     .on('pointerover', () => mousehover = true)
+    .on('pointerout', () => mousehover = false)
     .on('pointerdown', () => {
       this.scene.pause();
       this.scene.launch('PauseScene');
