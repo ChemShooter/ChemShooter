@@ -4,7 +4,7 @@
  * method when you're done with the player.
  */
 
-import Bullet from './bullet.js';
+import Bullet from './Bullet.js';
 
 export default class Player {
   constructor(scene, x, y) {
