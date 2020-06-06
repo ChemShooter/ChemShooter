@@ -32,22 +32,22 @@ const TILE_MAPPING = {
   POT: [{ index: 13, weight: 1 }, { index: 32, weight: 1 }, { index: 51, weight: 1 }],
   DOOR: {
     TOP: [
-      [93, 41, 92],
-      [103, 41, 102]
+      [93, 0, 92],
+      [103, 0, 102]
     ],
     // prettier-ignore
     LEFT: [
       [90, 91],
-      [41, 41]
+      [0, 0]
     ],
     BOTTOM: [
-      [73, 41, 72],
-      [83, 41, 82]
+      [73, 0, 72],
+      [83, 0, 82]
     ],
     // prettier-ignore
     RIGHT: [
       [90, 91],
-      [41, 41]
+      [0, 0]
     ]
   },
   CHEST: 166,

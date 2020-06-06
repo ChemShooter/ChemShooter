@@ -60,8 +60,10 @@ export default class DungeonScene extends Phaser.Scene {
     this.wallGroup = this.physics.add.staticGroup();
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
+    this.wallLayer.setDepth(1);
     this.stuffLayer = map.createBlankDynamicLayer("Stuff", oldTileset);
     const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
+    shadowLayer.setDepth(10);
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
 
@@ -96,8 +98,10 @@ export default class DungeonScene extends Phaser.Scene {
       for (const door of doors) {
         if (door.y === 0) {
           this.wallLayer.putTilesAt(TILES.DOOR.TOP, x + door.x - 1, y + door.y);
+          this.groundLayer.weightedRandomize(x + door.x, y + door.y, 1, 2, TILES.FLOOR);
         } else if (door.y === room.height - 1) {
           this.wallLayer.putTilesAt(TILES.DOOR.BOTTOM, x + door.x - 1, y + door.y - 1);
+          this.groundLayer.weightedRandomize(x + door.x, y + door.y - 1, 1, 2, TILES.FLOOR);
         } else if (door.x === 0) {
           this.wallLayer.putTilesAt(TILES.DOOR.LEFT, x + door.x - 1, y + door.y - 1);
         } else if (door.x === room.width - 1) {
@@ -146,7 +150,7 @@ export default class DungeonScene extends Phaser.Scene {
     // Not exactly correct for the tileset since there are more possible floor tiles, but this will
     // do for the example.
     this.groundLayer.setCollisionByExclusion([41, 42]);
-    this.wallLayer.setCollisionByExclusion([-1, 41, 80, 81]);
+    this.wallLayer.setCollisionByExclusion([-1, 0, 41, 80, 81, 72, 73, 1]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
 
     this.wallLayer.forEachTile(tile => {
@@ -159,7 +163,7 @@ export default class DungeonScene extends Phaser.Scene {
           wall.body.setSize(4, 16).setOffset(0, 0);
         } else {
           wall = this.wallGroup.create(x, y, 'wall-left', 0, false);
-          wall.body.setOffset(12, 0);
+          wall.body.setSize(4, 16).setOffset(12, 0);
         }
       }
     });
