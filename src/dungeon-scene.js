@@ -14,8 +14,9 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("mytiles", "../assets/tilesets/buch-tileset-48px-extruded.png");
     this.load.image("tiles", "../assets/tilesets/dungeon.png" );
+    this.load.image('wall-left', 'assets/tilesets/frames/wall_side_mid_left.png');
+    this.load.image('wall-right', 'assets/tilesets/frames/wall_side_mid_right.png');
     this.load.spritesheet(
       "characters",
       "../assets/spritesheets/characters.png",
@@ -55,11 +56,11 @@ export default class DungeonScene extends Phaser.Scene {
     });
     const oldTileset = map.addTilesetImage("mytiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
     const tileset = map.addTilesetImage('tiles', null, 16, 16);
+    this.wallGroup = this.physics.add.staticGroup();
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
     this.stuffLayer = map.createBlankDynamicLayer("Stuff", oldTileset);
-    this.wallGroup = this.physics.add.staticGroup();
-    const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
+    const shadowLayer = map.createBlankDynamicLayer("Shadow", tileset).fill(TILES.BLANK);
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
 
@@ -147,8 +148,24 @@ export default class DungeonScene extends Phaser.Scene {
     this.wallLayer.setCollisionByExclusion([-1, 41]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
 
+    /*
     this.wallLayer.forEachTile(tile => {
+      if (tile.index === TILES.WALL.LEFT || tile.index === TILES.WALL.RIGHT) {
+        const x = tile.getCenterX();
+        const y = tile.getCenterY();
+        let wall;
+        if (tile.index === TILES.WALL.LEFT) {
+          wall = this.wallGroup.create(x, y, 'wall-right');
+          wall.body.setSize(4, 16).setOffset(0, 0);
+        } else {
+          wall = this.wallGroup.create(x, y, 'wall-left');
+          wall.body.setOffset(12, 0);
+        }
+
+        this.wallLayer.removeTileAt(tile.x, tile.y);
+      }
     });
+    */
 
     this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {
       this.stuffLayer.setTileIndexCallback(TILES.STAIRS, null);
@@ -171,6 +188,7 @@ export default class DungeonScene extends Phaser.Scene {
     // Watch the player and tilemap layers for collisions, for the duration of the scene:
     this.physics.add.collider(this.player.sprite, this.wallLayer);
     this.physics.add.collider(this.player.sprite, this.stuffLayer);
+    this.physics.add.collider(this.player.sprite, this.wallGroup);
 
     // Phaser supports multiple cameras, but you can access the default camera like this:
     const camera = this.cameras.main;
