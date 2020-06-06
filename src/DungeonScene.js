@@ -38,30 +38,13 @@ export default class DungeonScene extends Phaser.Scene {
     this.hasPlayerReachedStairs = false;
     var mousehover=false;
 
-    var pauseButton = this.add.text(
-      800, 0, '||', {
-          font: "18px monospace",
-          fill: "#000000",
-          padding: { x: 7, y: 7 },
-          backgroundColor: "#cc96ff"
-    })
-    .setScrollFactor(0)
-    .setDepth(3)
-    .setOrigin(1, 0)
-    .on('pointerdown', () => {
+    const openPauseScene = () => {
       this.scene.pause();
       this.scene.launch('PauseScene');
-    });
-    pauseButton.setInteractive();
+    }
 
-    // button.on('pointerover',function(pointer)) {
-    //   mousehover = true;
-    // }
-    
-    this.input.keyboard.on('keydown_ESC', function() {
-      this.scene.pause();
-      this.scene.launch('PauseScene');
-    }, this);
+    this.input.keyboard.on('keydown_ESC', openPauseScene);
+    this.input.keyboard.on('keydown_P', openPauseScene);
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
@@ -277,34 +260,11 @@ export default class DungeonScene extends Phaser.Scene {
           bullet.setActive(true);
           bullet.setVisible(true);
 
-          //var pointerX = pointer.x;
-          //var pointerY = pointer.y + 100;
+			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
 
-          //console.log(`Player: ${this.player.sprite.x}, ${this.player.sprite.y}`);
-          //console.log(`Pointer: ${pointer.worldX}, ${pointer.worldY}`);
-
-          var direction = Math.atan( (pointer.worldX-this.player.sprite.x) / (pointer.worldY-this.player.sprite.y));
-
-          console.log(`Direction: ${direction}`);
-
-          var speed = 300;
-
-          // Calculate X and y velocity of bullet to moves it from player to pointer
-          if (pointer.worldY >= this.player.sprite.y)
-          {
-               bullet.body.velocity.x = speed*Math.sin(direction);
-               bullet.body.velocity.y = speed*Math.cos(direction);
-          }
-          else
-          {
-              bullet.body.velocity.x = -speed*Math.sin(direction);
-              bullet.body.velocity.y = -speed*Math.cos(direction);
-          }
-
-          bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
+					this.physics.velocityFromRotation(bullet.rotation, 300, bullet.body.velocity);
         }
   }
-
 
   update(time, delta) {
     if (this.hasPlayerReachedStairs) return;
