@@ -36,12 +36,10 @@ export default class DungeonScene extends Phaser.Scene {
     this.level++;
     this.hasPlayerReachedStairs = false;
 
-    /*
-    this.input.on('pointerdown', function() {
+    this.input.keyboard.on('keydown_ESC', function() {
       this.scene.pause();
       this.scene.launch('PauseScene');
     }, this);
-    */
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
