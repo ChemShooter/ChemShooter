@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Dungeon from "@mikewesthad/dungeon";
 import Player from "./Player.js";
-import Enemy from './Enemy';
+import SkeletEnemy from "./SkeletEnemy";
 import TILES from "./TileMapping.js";
 import TilemapVisibility from "./TilemapVisibility.js";
 
@@ -39,7 +39,7 @@ export default class DungeonScene extends Phaser.Scene {
       this.scene.pause();
       this.scene.launch('PauseScene');
     }, this);
-     */
+    */
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
@@ -150,7 +150,7 @@ export default class DungeonScene extends Phaser.Scene {
       const enemyX = map.tileToWorldX(room.centerX - 3);
       const enemyY = map.tileToWorldX(room.centerY - 3);
       // Put enemies in room
-      const enemy = new Enemy(this, enemyX, enemyY);
+      const enemy = new SkeletEnemy(this, enemyX, enemyY);
       this.enemyGroup.add(enemy);
       this.physics.add.collider(enemy.sprite, this.wallGroup);
       this.physics.add.collider(enemy.sprite, this.wallLayer);

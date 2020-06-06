@@ -1,20 +1,20 @@
 import Phaser from 'phaser';
 
 export default class Enemy extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, { walk, idle }) {
     super(scene, x, y);
 
     const anims = scene.anims;
     anims.create({
       key: "enemy-walk",
-      frames: anims.generateFrameNumbers("characters", { start: 9, end: 12 }),
+      frames: anims.generateFrameNumbers("characters", { start: walk.start, end: walk.end }),
       frameRate: 8,
       repeat: -1
     });
 
     anims.create({
       key: 'enemy-idle',
-      frames: anims.generateFrameNumbers('characters', { start: 13, end: 16 }),
+      frames: anims.generateFrameNumbers('characters', { start: idle.start, end: idle.end }),
       frameRate: 8,
       repeat: -1
     })
