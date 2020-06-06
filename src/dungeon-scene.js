@@ -37,7 +37,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.dungeon = new Dungeon({
       width: 50,
       height: 50,
-      doorPadding: 2,
+      doorPadding: 3,
       rooms: {
         width: { min: 7, max: 15, onlyOdd: true },
         height: { min: 7, max: 15, onlyOdd: true }
@@ -72,31 +72,33 @@ export default class DungeonScene extends Phaser.Scene {
       this.groundLayer.weightedRandomize(x, y + 2, width, height - 2, TILES.FLOOR);
 
       // Place the room corners tiles
-      this.groundLayer.putTileAt(TILES.WALL.TOP_LEFT, left, top);
-      this.groundLayer.putTileAt(TILES.WALL.TOP_RIGHT, right, top);
-      this.groundLayer.putTileAt(TILES.WALL.BOTTOM_RIGHT, right, bottom);
-      this.groundLayer.putTileAt(TILES.WALL.BOTTOM_LEFT, left, bottom);
+      this.wallLayer.putTilesAt(TILES.WALL.TOP_LEFT, left, top);
+      this.wallLayer.putTilesAt(TILES.WALL.TOP_RIGHT, right, top);
+      this.wallLayer.putTilesAt(TILES.WALL.BOTTOM_LEFT, left, bottom - 1);
+      this.wallLayer.putTilesAt(TILES.WALL.BOTTOM_RIGHT, right, bottom - 1);
 
-      this.wallLayer.weightedRandomize(x, y, width, 1, TILES.WALL.TOP.TOP_HALF);
-      this.wallLayer.weightedRandomize(x, y + 1, width, 1, TILES.WALL.TOP.BOTTOM_HALF);
+      this.wallLayer.weightedRandomize(x + 1, y, width - 2, 1, TILES.WALL.TOP.TOP_HALF);
+      this.wallLayer.weightedRandomize(x + 1, y + 1, width - 2, 1, TILES.WALL.TOP.BOTTOM_HALF);
+      this.wallLayer.weightedRandomize(x + 1, y + height - 2, width - 2, 1, TILES.WALL.TOP.TOP_HALF);
+      this.wallLayer.weightedRandomize(x + 1, y + height - 1, width - 2, 1, TILES.WALL.TOP.BOTTOM_HALF);
 
-      for (let offsetY = 1; offsetY < height; ++offsetY) {
+      for (let offsetY = 2; offsetY < height - 2; ++offsetY) {
         this.wallLayer.putTileAt(TILES.WALL.LEFT, left, top + offsetY);
         this.wallLayer.putTileAt(TILES.WALL.RIGHT, right, top + offsetY);
       }
 
       // Dungeons have rooms that are connected with doors. Each door has an x & y relative to the
       // room's location
-      var doors = room.getDoorLocations();
-      for (var i = 0; i < doors.length; i++) {
-        if (doors[i].y === 0) {
-          this.groundLayer.putTilesAt(TILES.DOOR.TOP, x + doors[i].x - 1, y + doors[i].y);
-        } else if (doors[i].y === room.height - 1) {
-          this.groundLayer.putTilesAt(TILES.DOOR.BOTTOM, x + doors[i].x - 1, y + doors[i].y);
-        } else if (doors[i].x === 0) {
-          this.groundLayer.putTilesAt(TILES.DOOR.LEFT, x + doors[i].x, y + doors[i].y - 1);
-        } else if (doors[i].x === room.width - 1) {
-          this.groundLayer.putTilesAt(TILES.DOOR.RIGHT, x + doors[i].x, y + doors[i].y - 1);
+      const doors = room.getDoorLocations();
+      for (const door of doors) {
+        if (door.y === 0) {
+          this.wallLayer.putTilesAt(TILES.DOOR.TOP, x + door.x - 1, y + door.y);
+        } else if (door.y === room.height - 1) {
+          this.wallLayer.putTilesAt(TILES.DOOR.BOTTOM, x + door.x - 1, y + door.y - 1);
+        } else if (door.x === 0) {
+          this.wallLayer.putTilesAt(TILES.DOOR.LEFT, x + door.x - 1, y + door.y - 1);
+        } else if (door.x === room.width - 1) {
+          this.wallLayer.putTilesAt(TILES.DOOR.RIGHT, x + door.x, y + door.y - 1);
         }
       }
     });
@@ -162,7 +164,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.player = new Player(this, x, y);
 
     // Watch the player and tilemap layers for collisions, for the duration of the scene:
-    this.physics.add.collider(this.player.sprite, this.groundLayer);
+    this.physics.add.collider(this.player.sprite, this.wallLayer);
     this.physics.add.collider(this.player.sprite, this.stuffLayer);
 
     // Phaser supports multiple cameras, but you can access the default camera like this:

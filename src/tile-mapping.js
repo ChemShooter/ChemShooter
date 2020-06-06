@@ -5,34 +5,50 @@
 const TILE_MAPPING = {
   BLANK: 20,
   WALL: {
-    TOP_LEFT: 3,
-    TOP_RIGHT: 4,
-    BOTTOM_RIGHT: 23,
-    BOTTOM_LEFT: 22,
+    TOP_LEFT: [
+      [72],
+      [82]
+    ],
+    TOP_RIGHT: [
+      [73],
+      [83]
+    ],
+    BOTTOM_LEFT: [
+      [92],
+      [102]
+    ],
+    BOTTOM_RIGHT: [
+      [93],
+      [103]
+    ],
     TOP: {
       TOP_HALF: [{ index: 1, weight: 2 }, { index: [2, 3], weight: 1 }],
-      BOTTOM_HALF: [{ index: 11, weight: 2}, { index: [12, 13], weight: 1}]
+      BOTTOM_HALF: [{ index: [12], weight: 1}]
     },
     LEFT: 81,
     RIGHT: 80,
     BOTTOM: [{ index: 1, weight: 4 }, { index: [78, 79, 80], weight: 1 }]
   },
-  FLOOR: [{ index: 51, weight: 9 }, { index: [52, 53], weight: 1 }],
+  FLOOR: [{ index: 41, weight: 9 }, { index: [42, 43], weight: 1 }],
   POT: [{ index: 13, weight: 1 }, { index: 32, weight: 1 }, { index: 51, weight: 1 }],
   DOOR: {
-    TOP: [40, 6, 38],
+    TOP: [
+      [93, 41, 92],
+      [103, 41, 102]
+    ],
     // prettier-ignore
     LEFT: [
-      [40],
-      [6],
-      [2]
+      [90, 91],
+      [41, 41]
     ],
-    BOTTOM: [2, 6, 0],
+    BOTTOM: [
+      [73, 41, 72],
+      [83, 41, 82]
+    ],
     // prettier-ignore
     RIGHT: [
-      [38],
-      [6],
-      [0]
+      [90, 91],
+      [41, 41]
     ]
   },
   CHEST: 166,
