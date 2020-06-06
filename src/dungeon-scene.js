@@ -41,8 +41,8 @@ export default class DungeonScene extends Phaser.Scene {
       height: 50,
       doorPadding: 3,
       rooms: {
-        width: { min: 7, max: 15, onlyOdd: true },
-        height: { min: 7, max: 15, onlyOdd: true }
+        width: { min: 15, max: 25, onlyOdd: true },
+        height: { min: 15, max: 25, onlyOdd: true }
       }
     });
 
@@ -55,16 +55,19 @@ export default class DungeonScene extends Phaser.Scene {
       width: this.dungeon.width,
       height: this.dungeon.height
     });
+
     const oldTileset = map.addTilesetImage("mytiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
     const tileset = map.addTilesetImage('tiles', null, 16, 16);
-    this.wallGroup = this.physics.add.staticGroup();
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
     this.wallLayer.setDepth(1);
+    this.wallGroup = this.physics.add.staticGroup();
     this.stuffLayer = map.createBlankDynamicLayer("Stuff", tileset);
     this.stuffLayer.setDepth(1);
     const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
     shadowLayer.setDepth(2);
+
+    this.enemyGroup = this.physics.add.staticGroup();
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
 
