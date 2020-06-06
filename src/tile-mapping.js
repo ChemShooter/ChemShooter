@@ -56,7 +56,12 @@ const TILE_MAPPING = {
   TOWER: [
     [55],
     [65]
-  ]
+  ],
+  HEART: {
+    FULL: 181,
+    HALF: 182,
+    EMPTY: 183
+  }
 };
 
 export default TILE_MAPPING;
