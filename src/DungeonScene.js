@@ -245,15 +245,20 @@ export default class DungeonScene extends Phaser.Scene {
           bullet.setActive(true);
           bullet.setVisible(true);
 
-					var pointerX = pointer.x;
-					var pointerY = pointer.y + 100;
+					//var pointerX = pointer.x;
+					//var pointerY = pointer.y + 100;
 
-					var direction = Math.atan( (pointerX-this.player.sprite.x) / (pointerY-this.player.sprite.y));
+					//console.log(`Player: ${this.player.sprite.x}, ${this.player.sprite.y}`);
+					//console.log(`Pointer: ${pointer.worldX}, ${pointer.worldY}`);
+
+					var direction = Math.atan( (pointer.worldX-this.player.sprite.x) / (pointer.worldY-this.player.sprite.y));
+
+					console.log(`Direction: ${direction}`);
 
 					var speed = 300;
 
 					// Calculate X and y velocity of bullet to moves it from player to pointer
-				  if (pointerY >= this.player.sprite.y)
+				  if (pointer.worldY >= this.player.sprite.y)
 					{
 						   bullet.body.velocity.x = speed*Math.sin(direction);
 							 bullet.body.velocity.y = speed*Math.cos(direction);
@@ -264,7 +269,7 @@ export default class DungeonScene extends Phaser.Scene {
 							bullet.body.velocity.y = -speed*Math.cos(direction);
 				  }
 
-			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointerX, pointerY);
+			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
 			  }
 	}
 
