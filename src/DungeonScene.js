@@ -38,6 +38,26 @@ export default class DungeonScene extends Phaser.Scene {
     this.hasPlayerReachedStairs = false;
     var mousehover=false;
 
+    var pauseButton = this.add.text(
+      800, 0, '||', {
+          font: "18px monospace",
+          fill: "#000000",
+          padding: { x: 7, y: 7 },
+          backgroundColor: "#cc96ff"
+    })
+    .setScrollFactor(0)
+    .setDepth(3)
+    .setOrigin(1, 0)
+    .on('pointerdown', () => {
+      this.scene.pause();
+      this.scene.launch('PauseScene');
+    });
+    pauseButton.setInteractive();
+
+    // button.on('pointerover',function(pointer)) {
+    //   mousehover = true;
+    // }
+
     const openPauseScene = () => {
       this.scene.pause();
       this.scene.launch('PauseScene');
