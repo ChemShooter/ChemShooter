@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import HealthBar from './HealthBar.js';
 
 export default class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, { name, walk, idle }) {
@@ -28,10 +29,13 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
       .setVelocity(0.5, 0.5);
 
     this.sprite.anims.play(`${name}-enemy-walk`);
+
+		this.healthBar = new HealthBar(scene, x, y);
   }
 
   update() {
-
+		this.healthBar.update(this.x, this.y);
+		this.healthBar.draw();
   }
 
   destroy() {

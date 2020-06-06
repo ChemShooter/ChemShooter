@@ -8,7 +8,6 @@ export default class PauseScene extends Phaser.Scene {
     }
 
     create() {
-
         var elements = [
             "H : ", "    ", "    ", "    ", "    ", "    ", "    ", "    ", "He: ",
             "Li: ", "Be: ", "    ", "B : ", "C : ", "N : ", "O : ", "F : ", "Ne: ",
@@ -38,7 +37,7 @@ export default class PauseScene extends Phaser.Scene {
         })
         .setOrigin(0.5, 0.5)
         .on('pointerdown', () => {
-          this.scene.stop();
+          this.scene.stop()
           this.scene.resume('DungeonScene')
         });
 
