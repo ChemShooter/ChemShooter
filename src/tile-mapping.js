@@ -29,7 +29,7 @@ const TILE_MAPPING = {
     RIGHT: 80,
   },
   FLOOR: [{ index: 41, weight: 9 }, { index: [42, 43], weight: 1 }],
-  POT: [{ index: 13, weight: 1 }, { index: 32, weight: 1 }, { index: 51, weight: 1 }],
+  BOX: 201,
   DOOR: {
     TOP: [
       [93, 0, 92],
@@ -50,12 +50,12 @@ const TILE_MAPPING = {
       [0, 0]
     ]
   },
-  CHEST: 166,
-  STAIRS: 81,
+  CHEST: 192,
+  STAIRS: 115,
   // prettier-ignore
   TOWER: [
-    [186],
-    [205]
+    [55],
+    [65]
   ]
 };
 

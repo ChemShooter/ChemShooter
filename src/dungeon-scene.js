@@ -9,7 +9,7 @@ import TilemapVisibility from "./tilemap-visibility.js";
  */
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
-    super();
+    super({});
     this.level = 0;
   }
 
@@ -61,9 +61,10 @@ export default class DungeonScene extends Phaser.Scene {
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
     this.wallLayer.setDepth(1);
-    this.stuffLayer = map.createBlankDynamicLayer("Stuff", oldTileset);
+    this.stuffLayer = map.createBlankDynamicLayer("Stuff", tileset);
+    this.stuffLayer.setDepth(1);
     const shadowLayer = map.createBlankDynamicLayer("Shadow", oldTileset).fill(TILES.BLANK);
-    shadowLayer.setDepth(10);
+    shadowLayer.setDepth(2);
 
     this.tilemapVisibility = new TilemapVisibility(shadowLayer);
 
@@ -132,7 +133,7 @@ export default class DungeonScene extends Phaser.Scene {
         // 50% chance of a pot anywhere in the room... except don't block a door!
         const x = Phaser.Math.Between(room.left + 2, room.right - 2);
         const y = Phaser.Math.Between(room.top + 2, room.bottom - 2);
-        this.stuffLayer.weightedRandomize(x, y, 1, 1, TILES.POT);
+        this.stuffLayer.weightedRandomize(x, y, 1, 1, TILES.BOX);
       } else {
         // 25% of either 2 or 4 towers, depending on the room size
         if (room.height >= 9) {
@@ -151,7 +152,7 @@ export default class DungeonScene extends Phaser.Scene {
     // do for the example.
     this.groundLayer.setCollisionByExclusion([41, 42]);
     this.wallLayer.setCollisionByExclusion([-1, 0, 41, 80, 81, 72, 73, 1]);
-    this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
+    this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26, 55]);
 
     this.wallLayer.forEachTile(tile => {
       if (tile.index === TILES.WALL.LEFT || tile.index === TILES.WALL.RIGHT) {
@@ -206,7 +207,7 @@ export default class DungeonScene extends Phaser.Scene {
         padding: { x: 20, y: 10 },
         backgroundColor: "#ffffff"
       })
-      .setScrollFactor(0);
+      .setScrollFactor(0).setDepth(3);
   }
 
   update(time, delta) {
