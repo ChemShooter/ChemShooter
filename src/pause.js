@@ -31,7 +31,19 @@ class pause extends Phaser.Scene {
                 backgroundColor: "#ff0000"
         })
         .setOrigin(1, 0)
-        .on('pointerdown', () => this.scene.stop());
+        .on('pointerdown', () => { console.log('pointerover'); });
+
+        var i;
+
+        for (i = 1; i <= 20; i++) {
+            this.add.text(
+                400 + (200*(i/10)), 20*i, 'X', {
+                    font: "18px monospace",
+                    fill: "#000000",
+                    padding: { x: 10, y: 7 },
+                    backgroundColor: "#ff0000"
+            })
+        }
 
         close.setInteractive();
         // close.on('pointerover', () => { console.log('pointerover'); });
