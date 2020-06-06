@@ -86,6 +86,14 @@ export default class Player extends Phaser.GameObjects.GameObject {
 
   decreaseHealth(amount) {
     this.health -= amount;
+    const healthMask = this.scene.healthMask;
+    let stepWidth = healthMask.displayWidth / 100;
+
+    healthMask.x -= stepWidth;
+    if (this.health <= 0) {
+      alert("Game over!");
+    }
+
     console.log(this.health);
   }
 }
