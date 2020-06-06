@@ -45,7 +45,6 @@ export default class Player extends Phaser.GameObjects.GameObject {
     const keys = this.keys;
     const sprite = this.sprite;
     const speed = 100;
-		const pointer = this.pointer;
 
     // Stop any previous movement from the last frame
     sprite.body.setVelocity(0);
