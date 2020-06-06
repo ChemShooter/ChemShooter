@@ -1,6 +1,6 @@
-class pause extends Phaser.Scene {
+export default class PauseScene extends Phaser.Scene {
     constructor() {
-        super({key: "pause"});
+        super({ key: 'PauseScene' });
     }
 
     preload() {
@@ -31,7 +31,10 @@ class pause extends Phaser.Scene {
                 backgroundColor: "#ff0000"
         })
         .setOrigin(1, 0)
-        .on('pointerdown', () => this.scene.stop());
+        .on('pointerdown', () => {
+          this.scene.stop();
+          this.scene.resume('DungeonScene')
+        });
 
         close.setInteractive();
         // close.on('pointerover', () => { console.log('pointerover'); });
@@ -40,8 +43,5 @@ class pause extends Phaser.Scene {
     update() {
 
     }
-
 }
-
-export default pause;
 

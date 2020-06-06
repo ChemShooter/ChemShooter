@@ -1,18 +1,15 @@
 import Phaser from "phaser";
 import Dungeon from "@mikewesthad/dungeon";
-import Player from "./player.js";
-import TILES from "./tile-mapping.js";
-import TilemapVisibility from "./tilemap-visibility.js";
-import pause from './pause';
-
-let pause_screen = new pause();
+import Player from "./Player.js";
+import TILES from "./TileMapping.js";
+import TilemapVisibility from "./TilemapVisibility.js";
 
 /**
  * Scene that generates a new dungeon
  */
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
-    super({});
+    super({key: 'DungeonScene'});
     this.level = 0;
   }
 
@@ -33,22 +30,26 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.launch(pause);
     this.level++;
     this.hasPlayerReachedStairs = false;
+
+    this.input.on('pointerdown', function() {
+      this.scene.pause();
+      this.scene.launch('PauseScene');
+    }, this);
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
     //  - Doors should be at least 2 tiles away from corners, so that we can place a corner tile on
     //    either side of the door location
     this.dungeon = new Dungeon({
-      width: 50,
-      height: 50,
+      width: 100,
+      height: 100,
       doorPadding: 3,
       rooms: {
-        width: { min: 15, max: 25, onlyOdd: true },
-        height: { min: 15, max: 25, onlyOdd: true }
-      }
+        width: {min: 15, max: 25, onlyOdd: true},
+        height: {min: 15, max: 25, onlyOdd: true}
+      },
     });
 
     this.dungeon.drawToConsole({});
