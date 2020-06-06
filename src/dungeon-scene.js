@@ -3,7 +3,12 @@ import Dungeon from "@mikewesthad/dungeon";
 import Player from "./player.js";
 import TILES from "./tile-mapping.js";
 import TilemapVisibility from "./tilemap-visibility.js";
+import TitleScene from './TitleScene';
 
+let titleScene = new TitleScene();
+const game = new Phaser.Game(config);
+game.scene.add('TitleScene', titleScene);
+game.scene.start('TitleScene');
 /**
  * Scene that generates a new dungeon
  */
