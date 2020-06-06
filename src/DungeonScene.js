@@ -10,6 +10,10 @@ import TilemapVisibility from "./TilemapVisibility.js";
 /**
  * Scene that generates a new dungeon
  */
+
+// global
+var mousehover=false;
+
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
     super({key: 'DungeonScene'});
@@ -36,7 +40,6 @@ export default class DungeonScene extends Phaser.Scene {
     // console.log(pointer.event);
     this.level++;
     this.hasPlayerReachedStairs = false;
-    var mousehover=false;
 
     var pauseButton = this.add.text(
       800, 0, '||', {
@@ -48,15 +51,13 @@ export default class DungeonScene extends Phaser.Scene {
     .setScrollFactor(0)
     .setDepth(3)
     .setOrigin(1, 0)
+    .on('pointerover', () => mousehover = true)
     .on('pointerdown', () => {
       this.scene.pause();
       this.scene.launch('PauseScene');
     });
     pauseButton.setInteractive();
 
-    // button.on('pointerover',function(pointer)) {
-    //   mousehover = true;
-    // }
 
     const openPauseScene = () => {
       this.scene.pause();
@@ -254,36 +255,36 @@ export default class DungeonScene extends Phaser.Scene {
     camera.startFollow(this.player.sprite);
 
     // Help text that has a "fixed" position on the screen
-    if (!mousehover) {
-      this.add
-        .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.level}`, {
-          font: "18px monospace",
-          fill: "#000000",
-          padding: { x: 20, y: 10 },
-          backgroundColor: "#ffffff"
-        })
-        .setScrollFactor(0).setDepth(3);
+    this.add
+      .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.level}`, {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff"
+      })
+      .setScrollFactor(0).setDepth(3);
 
-      // Bullets stuff
-      this.bullets = this.physics.add.group({
-          defaultKey: 'bullet',
-          maxSize: 20
-      });
+    // Bullets stuff
+    this.bullets = this.physics.add.group({
+        defaultKey: 'bullet',
+        maxSize: 20
+    });
 
-      this.input.on('pointerdown', this.shoot, this);
-    }
+    this.input.on('pointerdown', this.shoot, this);
   }
 
   shoot(pointer) {
+    if (!mousehover) {
       var bullet = this.bullets.get(this.player.sprite.x, this.player.sprite.y + this.player.sprite.height/4);
       if (bullet) {
-          bullet.setActive(true);
-          bullet.setVisible(true);
+        bullet.setActive(true);
+        bullet.setVisible(true);
 
-			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
+        bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
 
-					this.physics.velocityFromRotation(bullet.rotation, 300, bullet.body.velocity);
-        }
+        this.physics.velocityFromRotation(bullet.rotation, 300, bullet.body.velocity);
+      }
+    }
   }
 
   update(time, delta) {
