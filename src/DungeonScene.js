@@ -159,7 +159,7 @@ export default class DungeonScene extends Phaser.Scene {
       this.physics.add.collider(enemy.sprite, this.wallLayer);
       this.physics.add.collider(enemy.sprite, this.stuffLayer);
       this.physics.add.collider(enemy.sprite, this.player.sprite, () => {
-
+        this.player.decreaseHealth(1);
       });
     }
 

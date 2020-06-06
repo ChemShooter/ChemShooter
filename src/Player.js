@@ -3,14 +3,15 @@
  * response to WASD keys. Call its update method from the scene's update and call its destroy
  * method when you're done with the player.
  */
-
-//import Bullet from './Bullet.js';
+import _ from 'lodash';
 import Phaser from "phaser";
 
 export default class Player extends Phaser.GameObjects.GameObject {
   constructor(scene, x, y) {
     super(scene, x, y);
     this.scene = scene;
+    this.health = 100;
+    this.decreaseHealth = _.throttle(this.decreaseHealth, 200);
 
     const anims = scene.anims;
     anims.create({
@@ -82,5 +83,10 @@ export default class Player extends Phaser.GameObjects.GameObject {
 
   destroy() {
     this.sprite.destroy();
+  }
+
+  decreaseHealth(amount) {
+    this.health -= amount;
+    console.log(this.health);
   }
 }
