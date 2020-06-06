@@ -1,10 +1,20 @@
-export default class Player {
+/**
+ * A class that wraps up our top down player logic. It creates, animates and moves a sprite in
+ * response to WASD keys. Call its update method from the scene's update and call its destroy
+ * method when you're done with the player.
+ */
+
+import Bullet from './Bullet.js';
+import Phaser from "phaser";
+
+export default class Player extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
+    super(scene, x, y);
     this.scene = scene;
 
     const anims = scene.anims;
     anims.create({
-      key: "enemy-walk",
+      key: "player-walk",
       frames: anims.generateFrameNumbers("characters", { start: 5, end: 8 }),
       frameRate: 8,
       repeat: -1
@@ -25,7 +35,7 @@ export default class Player {
     this.sprite.anims.play("player-walk");
 
     this.keys = this.scene.input.keyboard.createCursorKeys();
-  }
+	}
 
   freeze() {
     this.sprite.body.moves = false;
@@ -35,9 +45,13 @@ export default class Player {
     const keys = this.keys;
     const sprite = this.sprite;
     const speed = 100;
+		const pointer = this.pointer;
 
     // Stop any previous movement from the last frame
     sprite.body.setVelocity(0);
+
+		// Rotate player towards mouse pointer
+		// sprite.rotation = Phaser.Math.Angle.Between(sprite.x, sprite.y, pointer.x, pointer.y);
 
     // Horizontal movement
     if (keys.left.isDown) {
