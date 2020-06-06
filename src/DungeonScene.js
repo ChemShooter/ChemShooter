@@ -30,6 +30,8 @@ export default class DungeonScene extends Phaser.Scene {
       }
     );
     this.load.image('bullet', 'assets/images/bullet.png');
+    this.load.image('healthcontainer', 'healthcontainer.png');
+    this.load.image('healthbar', 'healthbar.png');
   }
 
   create() {
@@ -43,6 +45,12 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.input.keyboard.on('keydown_ESC', openPauseScene);
     this.input.keyboard.on('keydown_P', openPauseScene);
+
+    const healthContainer = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'healthcontainer');
+    const healthBar = this.add.sprite(healthContainer.x + 46, healthContainer.y, 'healthbar');
+    this.healthMask = this.add.sprite(healthBar.x, healthBar.y, 'healthbar');
+    this.healthMask.visible = false;
+    healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
