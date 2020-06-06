@@ -8,13 +8,28 @@ export default class PauseScene extends Phaser.Scene {
     }
 
     create() {
+
+        var elements = [
+            "H : ", "    ", "    ", "    ", "    ", "    ", "    ", "    ", "He: ",
+            "Li: ", "Be: ", "    ", "B : ", "C : ", "N : ", "O : ", "F : ", "Ne: ",
+            "Na: ", "Mg: ", "    ", "Al: ", "Si: ", "P : ", "S : ", "Cl: ", "Ar: ",
+            "K : ", "Ca: ",
+        ];
+
+        var amounts = [
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0
+        ];
+        
         const { width, height } = this.sys.game.config;
         let background = this.add.sprite(0, 0, 'bgImage');
         background.alpha = 0.5;
         background.setOrigin(0, 0);
 
         let title_text = this.add.text(
-            width/2, height/2, 'Clicc for free dmoj points', {
+            width/2, height/2-70, 'Clicc for free dmoj points', {
                 font: "18px monospace",
                 fill: "#000000",
                 padding: { x: 20, y: 10 },
@@ -31,26 +46,63 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#ff0000"
         })
         .setOrigin(1, 0)
-        .on('pointerdown', () => { console.log('pointerover'); });
-
-        var i;
-
-        for (i = 1; i <= 20; i++) {
-            this.add.text(
-                400 + (200*(i/10)), 20*i, 'X', {
-                    font: "18px monospace",
-                    fill: "#000000",
-                    padding: { x: 10, y: 7 },
-                    backgroundColor: "#ff0000"
-            })
-        }
+        .on('pointerdown', () => {
+          this.scene.stop();
+          this.scene.resume('DungeonScene')
+        });
 
         close.setInteractive();
         // close.on('pointerover', () => { console.log('pointerover'); });
-    }
+        
+        let i, t;
+        t = 0;
+        // var h = toString(16);
 
-    update() {
+        for (i = 0; i < 29; i++) {
+            let c, m;
+            c = Math.floor(i/9);
+            m = (i%9)
+            // console.out(i, c);
+            if (elements[i] != "    ") {
+                t += 7;
+                console.log(t);
+                this.add.text(
+                    100+65*m, 300 + c*70, elements[i] + +amounts[i], {
+                        font: "12px monospace",
+                        fill: "#000000",
+                        padding: { x: 15, y: 20 },
+                        backgroundColor: "#" + (255).toString(16) + (225-t).toString(16) + (255).toString(16)
+                });
+            } else {   
+                this.add.text(
+                    100+65*m, 300 + c*70, "     ", {
+                        padding: { x: 15, y: 20 },
+                        // backgroundColor: "#" + (255).toString(16) + (225-10*i).toString(16) + (255).toString(16)
+                });
+            }
+        }
 
+        // for (i = 0; i < 10; i++) {
+        //     this.add.text(
+        //         50+70*i, 350, 'X', {
+        //             font: "18px monospace",
+        //             fill: "#000000",
+        //             padding: { x: 25, y: 20 },
+        //             backgroundColor: "#" + (255).toString(16) + (225-10*i).toString(16) + (255).toString(16)
+        //     });
+        // }
+
+        // for (i = 0; i < 10; i++) {
+        //     this.add.text(
+        //         50+70*i, 420, 'X', {
+        //             font: "18px monospace",
+        //             fill: "#000000",
+        //             padding: { x: 25, y: 20 },
+        //             backgroundColor: "#" + (255-20*(i)).toString(16) + (225-10*(i)).toString(16) + (255).toString(16)
+        //     });
+        // }
+
+        // close.on('pointerover', () => { console.log('pointerover'); });
     }
 }
 
