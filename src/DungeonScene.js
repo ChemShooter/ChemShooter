@@ -29,7 +29,7 @@ export default class DungeonScene extends Phaser.Scene {
         frameHeight: 32
       }
     );
-		this.load.image('bullet', 'assets/images/bullet.png');
+    this.load.image('bullet', 'assets/images/bullet.png');
   }
 
   create() {
@@ -229,25 +229,27 @@ export default class DungeonScene extends Phaser.Scene {
     camera.startFollow(this.player.sprite);
 
     // Help text that has a "fixed" position on the screen
-    this.add
-      .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.level}`, {
-        font: "18px monospace",
-        fill: "#000000",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff"
-      })
-      .setScrollFactor(0).setDepth(3);
+    if (!mousehover) {
+      this.add
+        .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.level}`, {
+          font: "18px monospace",
+          fill: "#000000",
+          padding: { x: 20, y: 10 },
+          backgroundColor: "#ffffff"
+        })
+        .setScrollFactor(0).setDepth(3);
 
-    // Bullets stuff
-    this.bullets = this.physics.add.group({
-        defaultKey: 'bullet',
-        maxSize: 20
-    });
+      // Bullets stuff
+      this.bullets = this.physics.add.group({
+          defaultKey: 'bullet',
+          maxSize: 20
+      });
 
-    this.input.on('pointerdown', this.shoot, this);
-	}
+      this.input.on('pointerdown', this.shoot, this);
+    }
+  }
 
-	shoot(pointer) {
+  shoot(pointer) {
       var bullet = this.bullets.get(this.player.sprite.x, this.player.sprite.y + this.player.sprite.height/4);
       if (bullet) {
           bullet.setActive(true);
@@ -256,9 +258,8 @@ export default class DungeonScene extends Phaser.Scene {
 			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
 
 					this.physics.velocityFromRotation(bullet.rotation, 300, bullet.body.velocity);
-			  }
-	}
-
+        }
+  }
 
   update(time, delta) {
     if (this.hasPlayerReachedStairs) return;
@@ -272,7 +273,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.tilemapVisibility.setActiveRoom(playerRoom);
 
-		// If a bullet hits a wall, remove it
+    // If a bullet hits a wall, remove it
     this.bullets.children.each(function(b) {
         if (b.active) {
             if (b.y < 0) {
