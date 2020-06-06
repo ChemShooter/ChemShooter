@@ -32,21 +32,23 @@ const TILE_MAPPING = {
   BOX: 201,
   DOOR: {
     TOP: [
-      [93, 0, 92],
-      [103, 0, 102]
+      [93, 0, 0, 92],
+      [103, 0, 0, 102]
     ],
     // prettier-ignore
     LEFT: [
       [90, 91],
+      [0, 0],
       [0, 0]
     ],
     BOTTOM: [
-      [73, 0, 72],
-      [83, 0, 82]
+      [73, 0, 0, 72],
+      [83, 0, 0, 82]
     ],
     // prettier-ignore
     RIGHT: [
       [90, 91],
+      [0, 0],
       [0, 0]
     ]
   },
@@ -56,7 +58,12 @@ const TILE_MAPPING = {
   TOWER: [
     [55],
     [65]
-  ]
+  ],
+  HEART: {
+    FULL: 181,
+    HALF: 182,
+    EMPTY: 183
+  }
 };
 
 export default TILE_MAPPING;

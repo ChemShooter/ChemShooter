@@ -1,18 +1,10 @@
-/**
- * A class that wraps up our top down player logic. It creates, animates and moves a sprite in
- * response to WASD keys. Call its update method from the scene's update and call its destroy
- * method when you're done with the player.
- */
-
-import Bullet from './bullet.js';
-
 export default class Player {
   constructor(scene, x, y) {
     this.scene = scene;
 
     const anims = scene.anims;
     anims.create({
-      key: "player-walk",
+      key: "enemy-walk",
       frames: anims.generateFrameNumbers("characters", { start: 5, end: 8 }),
       frameRate: 8,
       repeat: -1
@@ -33,28 +25,6 @@ export default class Player {
     this.sprite.anims.play("player-walk");
 
     this.keys = this.scene.input.keyboard.createCursorKeys();
-    this.pointer = this.scene.input.mousePointer;
-
-
-		this.bullets = this.scene.physics.add.group({classType: Bullet, runChildUpdate: true});
-		/*
-		this.bullets = this.scene.physics.add.group({
-				defaultKey: 'bullet',
-				maxSize: 20
-		});
-		*/
-
-		// shoot a bullet on click
-		this.scene.input.on('pointerdown', () => {
-				console.log('Clicked');
-				var bullet = this.bullets.get().setActive(true).setVisible(true);
-
-				if (bullet) {
-					console.log('Bullet Available!');
-					bullet.fire(this, { x: this.pointer.x, y: this.pointer.y} );
-					//this.physics.add.collider(enemy, bullet, enemyHitCallback);
-				}
-		}, this);
   }
 
   freeze() {
@@ -65,13 +35,9 @@ export default class Player {
     const keys = this.keys;
     const sprite = this.sprite;
     const speed = 100;
-		const pointer = this.pointer;
 
     // Stop any previous movement from the last frame
     sprite.body.setVelocity(0);
-
-		// Rotate player towards mouse pointer
-		// sprite.rotation = Phaser.Math.Angle.Between(sprite.x, sprite.y, pointer.x, pointer.y);
 
     // Horizontal movement
     if (keys.left.isDown) {
