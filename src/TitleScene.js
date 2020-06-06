@@ -31,7 +31,7 @@ class TitleScene extends Phaser.Scene {
                 backgroundColor: "#ff0000"
         })
         .setOrigin(1, 0)
-        .on('pointerdown', () => scene.remove("TitleScene") );
+        .on('pointerdown', () => this.scene.remove("TitleScene") );
 
         close.setInteractive();
         // close.on('pointerover', () => { console.log('pointerover'); });

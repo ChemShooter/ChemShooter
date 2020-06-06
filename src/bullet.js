@@ -1,5 +1,6 @@
 export default class Bullet extends Phaser.GameObjects.Image {
 	constructor(scene) {
+	  console.log('initialized');
 		super(scene, 0, 0, 'bullet');
 		this.speed = 1;
 
@@ -26,8 +27,8 @@ export default class Bullet extends Phaser.GameObjects.Image {
         this.xSpeed = -this.speed*Math.sin(this.direction);
         this.ySpeed = -this.speed*Math.cos(this.direction);
 		}
-    
-    //this.rotation = Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y); 
+
+    //this.rotation = Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y);
 		this.rotation = shooter.rotation;
 
 		this.born = 0;
@@ -48,5 +49,5 @@ export default class Bullet extends Phaser.GameObjects.Image {
         this.setVisible(false);
     }
 	}
-	
+
 }
