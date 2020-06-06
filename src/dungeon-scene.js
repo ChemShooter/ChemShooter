@@ -3,12 +3,10 @@ import Dungeon from "@mikewesthad/dungeon";
 import Player from "./player.js";
 import TILES from "./tile-mapping.js";
 import TilemapVisibility from "./tilemap-visibility.js";
-import TitleScene from './TitleScene';
+import pause from './pause';
 
-let titleScene = new TitleScene();
-const game = new Phaser.Game(config);
-game.scene.add('TitleScene', titleScene);
-game.scene.start('TitleScene');
+let pause_screen = new pause();
+
 /**
  * Scene that generates a new dungeon
  */
@@ -34,6 +32,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   create() {
+    this.scene.launch(pause);
     this.level++;
     this.hasPlayerReachedStairs = false;
 
