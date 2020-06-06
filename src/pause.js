@@ -1,6 +1,6 @@
-class TitleScene extends Phaser.Scene {
+class pause extends Phaser.Scene {
     constructor() {
-        super({key: "TitleScene"});
+        super({key: "pause"});
     }
 
     preload() {
@@ -31,7 +31,7 @@ class TitleScene extends Phaser.Scene {
                 backgroundColor: "#ff0000"
         })
         .setOrigin(1, 0)
-        .on('pointerdown', () => this.scene.remove("TitleScene") );
+        .on('pointerdown', () => this.scene.stop());
 
         close.setInteractive();
         // close.on('pointerover', () => { console.log('pointerover'); });
@@ -43,5 +43,5 @@ class TitleScene extends Phaser.Scene {
 
 }
 
-export default TitleScene;
+export default pause;
 
