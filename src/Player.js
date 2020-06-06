@@ -35,29 +35,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.sprite.anims.play("player-walk");
 
     this.keys = this.scene.input.keyboard.createCursorKeys();
-    this.pointer = this.scene.input.mousePointer;
-
-
-		this.bullets = this.scene.physics.add.group({classType: Bullet, runChildUpdate: true});
-		/*
-		this.bullets = this.scene.physics.add.group({
-				defaultKey: 'bullet',
-				maxSize: 20
-		});
-		*/
-
-		// shoot a bullet on click
-		this.scene.input.on('pointerdown', () => {
-				console.log('Clicked');
-				var bullet = this.bullets.get().setActive(true).setVisible(true);
-
-				if (bullet) {
-					console.log('Bullet Available!');
-					bullet.fire(this, { x: this.pointer.x, y: this.pointer.y} );
-					//this.physics.add.collider(enemy, bullet, enemyHitCallback);
-				}
-		}, this);
-  }
+	}
 
   freeze() {
     this.sprite.body.moves = false;
