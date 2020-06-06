@@ -29,7 +29,7 @@ export default class DungeonScene extends Phaser.Scene {
         frameHeight: 32
       }
     );
-		this.load.image('bullet', 'assets/tilesets/bullet.png');
+		this.load.image('bullet', 'assets/images/bullet.png');
   }
 
   create() {
@@ -216,7 +216,45 @@ export default class DungeonScene extends Phaser.Scene {
         backgroundColor: "#ffffff"
       })
       .setScrollFactor(0).setDepth(3);
-  }
+
+    // Bullets stuff
+    this.bullets = this.physics.add.group({
+        defaultKey: 'bullet',
+        maxSize: 20
+    });
+
+    this.input.on('pointerdown', this.shoot, this);
+	}
+
+	shoot(pointer) {
+      var bullet = this.bullets.get(this.player.sprite.x, this.player.sprite.y + this.player.sprite.height/4);
+      if (bullet) {
+          bullet.setActive(true);
+          bullet.setVisible(true);
+
+					var pointerX = pointer.x;
+					var pointerY = pointer.y + 100;
+
+					var direction = Math.atan( (pointerX-this.player.sprite.x) / (pointerY-this.player.sprite.y));
+
+					var speed = 300;
+
+					// Calculate X and y velocity of bullet to moves it from player to pointer
+				  if (pointerY >= this.player.sprite.y)
+					{
+						   bullet.body.velocity.x = speed*Math.sin(direction);
+							 bullet.body.velocity.y = speed*Math.cos(direction);
+					}
+					else
+				  {
+					    bullet.body.velocity.x = -speed*Math.sin(direction);
+							bullet.body.velocity.y = -speed*Math.cos(direction);
+				  }
+	
+			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointerX, pointerY);
+			  }
+	}
+
 
   update(time, delta) {
     if (this.hasPlayerReachedStairs) return;
@@ -230,5 +268,14 @@ export default class DungeonScene extends Phaser.Scene {
     const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY);
 
     this.tilemapVisibility.setActiveRoom(playerRoom);
+
+		// If a bullet hits a wall, remove it
+    this.bullets.children.each(function(b) {
+        if (b.active) {
+            if (b.y < 0) {
+                b.setActive(false);
+            }
+        }
+    }.bind(this));
   }
 }
