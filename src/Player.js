@@ -4,7 +4,7 @@
  * method when you're done with the player.
  */
 
-import Bullet from './Bullet.js';
+//import Bullet from './Bullet.js';
 import Phaser from "phaser";
 
 export default class Player extends Phaser.GameObjects.GameObject {
