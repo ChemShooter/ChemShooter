@@ -104,7 +104,7 @@ export default class DungeonScene extends Phaser.Scene {
       for (const door of doors) {
         if (door.y === 0) {
           this.wallLayer.putTilesAt(TILES.DOOR.TOP, x + door.x - 1, y + door.y);
-          this.groundLayer.weightedRandomize(x + door.x, y + door.y, 1, 2, TILES.FLOOR);
+          this.groundLayer.weightedRandomize(x + door.x, y + door.y, 2, 2, TILES.FLOOR);
         } else if (door.y === room.height - 1) {
           this.wallLayer.putTilesAt(TILES.DOOR.BOTTOM, x + door.x - 1, y + door.y - 1);
           this.groundLayer.weightedRandomize(x + door.x, y + door.y - 1, 1, 2, TILES.FLOOR);
