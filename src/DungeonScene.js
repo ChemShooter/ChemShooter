@@ -1,7 +1,9 @@
 import Phaser from "phaser";
 import Dungeon from "@mikewesthad/dungeon";
 import Player from "./Player.js";
-import SkeletEnemy from "./SkeletEnemy";
+import SkeletEnemy from "./enemies/SkeletEnemy";
+import MuddyEnemy from "./enemies/MuddyEnemy";
+import SwampyEnemy from "./enemies/SwampyEnemy";
 import TILES from "./TileMapping.js";
 import TilemapVisibility from "./TilemapVisibility.js";
 
@@ -146,17 +148,25 @@ export default class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(this.player.sprite, this.stuffLayer);
     this.physics.add.collider(this.player.sprite, this.wallGroup);
 
-    otherRooms.forEach(room => {
-      const enemyX = map.tileToWorldX(room.centerX - 3);
-      const enemyY = map.tileToWorldX(room.centerY - 3);
+    const createEnemy = (room, enemyClass, offsetX, offsetY) => {
+      const enemyX = map.tileToWorldX(room.centerX + offsetX);
+      const enemyY = map.tileToWorldX(room.centerY + offsetY);
       // Put enemies in room
-      const enemy = new SkeletEnemy(this, enemyX, enemyY);
+      const enemy = new enemyClass(this, enemyX, enemyY);
       this.enemyGroup.add(enemy);
+
       this.physics.add.collider(enemy.sprite, this.wallGroup);
       this.physics.add.collider(enemy.sprite, this.wallLayer);
       this.physics.add.collider(enemy.sprite, this.stuffLayer);
       this.physics.add.collider(enemy.sprite, this.player.sprite, () => {
+
       });
+    }
+
+    otherRooms.forEach(room => {
+      createEnemy(room, SkeletEnemy, -3, -3);
+      createEnemy(room, SwampyEnemy, -3, 3);
+      createEnemy(room, MuddyEnemy, 3, 3);
 
       const rand = Math.random();
       if (rand <= 0.25) {
