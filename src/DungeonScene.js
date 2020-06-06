@@ -29,7 +29,7 @@ export default class DungeonScene extends Phaser.Scene {
         frameHeight: 32
       }
     );
-		this.load.image('bullet', 'assets/images/bullet.png');
+    this.load.image('bullet', 'assets/images/bullet.png');
   }
 
   create() {
@@ -232,57 +232,59 @@ export default class DungeonScene extends Phaser.Scene {
     camera.startFollow(this.player.sprite);
 
     // Help text that has a "fixed" position on the screen
-    this.add
-      .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.level}`, {
-        font: "18px monospace",
-        fill: "#000000",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff"
-      })
-      .setScrollFactor(0).setDepth(3);
+    if (!mousehover) {
+      this.add
+        .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.level}`, {
+          font: "18px monospace",
+          fill: "#000000",
+          padding: { x: 20, y: 10 },
+          backgroundColor: "#ffffff"
+        })
+        .setScrollFactor(0).setDepth(3);
 
-    // Bullets stuff
-    this.bullets = this.physics.add.group({
-        defaultKey: 'bullet',
-        maxSize: 20
-    });
+      // Bullets stuff
+      this.bullets = this.physics.add.group({
+          defaultKey: 'bullet',
+          maxSize: 20
+      });
 
-    this.input.on('pointerdown', this.shoot, this);
-	}
+      this.input.on('pointerdown', this.shoot, this);
+    }
+  }
 
-	shoot(pointer) {
+  shoot(pointer) {
       var bullet = this.bullets.get(this.player.sprite.x, this.player.sprite.y + this.player.sprite.height/4);
       if (bullet) {
           bullet.setActive(true);
           bullet.setVisible(true);
 
-					//var pointerX = pointer.x;
-					//var pointerY = pointer.y + 100;
+          //var pointerX = pointer.x;
+          //var pointerY = pointer.y + 100;
 
-					//console.log(`Player: ${this.player.sprite.x}, ${this.player.sprite.y}`);
-					//console.log(`Pointer: ${pointer.worldX}, ${pointer.worldY}`);
+          //console.log(`Player: ${this.player.sprite.x}, ${this.player.sprite.y}`);
+          //console.log(`Pointer: ${pointer.worldX}, ${pointer.worldY}`);
 
-					var direction = Math.atan( (pointer.worldX-this.player.sprite.x) / (pointer.worldY-this.player.sprite.y));
+          var direction = Math.atan( (pointer.worldX-this.player.sprite.x) / (pointer.worldY-this.player.sprite.y));
 
-					console.log(`Direction: ${direction}`);
+          console.log(`Direction: ${direction}`);
 
-					var speed = 300;
+          var speed = 300;
 
-					// Calculate X and y velocity of bullet to moves it from player to pointer
-				  if (pointer.worldY >= this.player.sprite.y)
-					{
-						   bullet.body.velocity.x = speed*Math.sin(direction);
-							 bullet.body.velocity.y = speed*Math.cos(direction);
-					}
-					else
-				  {
-					    bullet.body.velocity.x = -speed*Math.sin(direction);
-							bullet.body.velocity.y = -speed*Math.cos(direction);
-				  }
+          // Calculate X and y velocity of bullet to moves it from player to pointer
+          if (pointer.worldY >= this.player.sprite.y)
+          {
+               bullet.body.velocity.x = speed*Math.sin(direction);
+               bullet.body.velocity.y = speed*Math.cos(direction);
+          }
+          else
+          {
+              bullet.body.velocity.x = -speed*Math.sin(direction);
+              bullet.body.velocity.y = -speed*Math.cos(direction);
+          }
 
-			    bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
-			  }
-	}
+          bullet.rotation = Phaser.Math.Angle.Between(this.player.sprite.x, this.player.sprite.y, pointer.worldX, pointer.worldY);
+        }
+  }
 
 
   update(time, delta) {
@@ -297,7 +299,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.tilemapVisibility.setActiveRoom(playerRoom);
 
-		// If a bullet hits a wall, remove it
+    // If a bullet hits a wall, remove it
     this.bullets.children.each(function(b) {
         if (b.active) {
             if (b.y < 0) {
