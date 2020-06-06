@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@mikewesthad/dungeon": "^2.0.1",
+    "lodash": "^4.17.15",
     "phaser": "^3.23.0"
   }
 }

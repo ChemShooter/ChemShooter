@@ -1,7 +1,9 @@
 import Phaser from "phaser";
 import Dungeon from "@mikewesthad/dungeon";
 import Player from "./Player.js";
-import Enemy from './Enemy';
+import SkeletEnemy from "./enemies/SkeletEnemy";
+import MuddyEnemy from "./enemies/MuddyEnemy";
+import SwampyEnemy from "./enemies/SwampyEnemy";
 import TILES from "./TileMapping.js";
 import TilemapVisibility from "./TilemapVisibility.js";
 
@@ -34,32 +36,10 @@ export default class DungeonScene extends Phaser.Scene {
     this.level++;
     this.hasPlayerReachedStairs = false;
 
-    var mousehover=false;
-
-    var pauseButton = this.add.text(
-      800, 0, '||', {
-          font: "18px monospace",
-          fill: "#000000",
-          padding: { x: 7, y: 7 },
-          backgroundColor: "#cc96ff"
-    })
-    .setScrollFactor(0)
-    .setDepth(3)
-    .setOrigin(1, 0)
-    .on('pointerdown', () => {
-      this.scene.pause();
-      this.scene.launch('PauseScene');
-    });
-    pauseButton.setInteractive();
-
-    if (pauseButton.input.pointerOver())
-      mousehover = true;
-    /*
-    this.input.on('pointerdown', function() {
+    this.input.keyboard.on('keydown_ESC', function() {
       this.scene.pause();
       this.scene.launch('PauseScene');
     }, this);
-     */
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
@@ -166,17 +146,25 @@ export default class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(this.player.sprite, this.stuffLayer);
     this.physics.add.collider(this.player.sprite, this.wallGroup);
 
-    otherRooms.forEach(room => {
-      const enemyX = map.tileToWorldX(room.centerX - 3);
-      const enemyY = map.tileToWorldX(room.centerY - 3);
+    const createEnemy = (room, enemyClass, offsetX, offsetY) => {
+      const enemyX = map.tileToWorldX(room.centerX + offsetX);
+      const enemyY = map.tileToWorldX(room.centerY + offsetY);
       // Put enemies in room
-      const enemy = new Enemy(this, enemyX, enemyY);
+      const enemy = new enemyClass(this, enemyX, enemyY);
       this.enemyGroup.add(enemy);
+
       this.physics.add.collider(enemy.sprite, this.wallGroup);
       this.physics.add.collider(enemy.sprite, this.wallLayer);
       this.physics.add.collider(enemy.sprite, this.stuffLayer);
       this.physics.add.collider(enemy.sprite, this.player.sprite, () => {
+        this.player.decreaseHealth(1);
       });
+    }
+
+    otherRooms.forEach(room => {
+      createEnemy(room, SkeletEnemy, -3, -3);
+      createEnemy(room, SwampyEnemy, -3, 3);
+      createEnemy(room, MuddyEnemy, 3, 3);
 
       const rand = Math.random();
       if (rand <= 0.25) {
