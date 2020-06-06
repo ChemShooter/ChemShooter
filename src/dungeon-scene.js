@@ -148,7 +148,6 @@ export default class DungeonScene extends Phaser.Scene {
     this.wallLayer.setCollisionByExclusion([-1, 41]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
 
-    /*
     this.wallLayer.forEachTile(tile => {
       if (tile.index === TILES.WALL.LEFT || tile.index === TILES.WALL.RIGHT) {
         const x = tile.getCenterX();
@@ -165,7 +164,6 @@ export default class DungeonScene extends Phaser.Scene {
         this.wallLayer.removeTileAt(tile.x, tile.y);
       }
     });
-    */
 
     this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {
       this.stuffLayer.setTileIndexCallback(TILES.STAIRS, null);
