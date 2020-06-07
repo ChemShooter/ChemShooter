@@ -164,6 +164,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(this.player.sprite, this.stuffLayer, (player, stuff) => {
 				if (stuff.index === TILES.STAIRS) {
 					this.hasPlayerReachedStairs = true;
+					console.log(this.game.playerHealth);
 					this.game.playerHealth = 100;
 					this.player.freeze();
 					const cam = this.cameras.main;
