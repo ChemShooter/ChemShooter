@@ -14,38 +14,38 @@ export default class PauseScene extends Phaser.Scene {
             "Na", "Mg", "Al", "Si", "P ", "S ", "Cl", "Ar",
             "K ", "Ca",
         ];
-        
+
         var count = this.game.elementAmounts
         // var count = [
-        //     0, 0, 
+        //     0, 0,
         //     0, 0, 0, 0, 0, 0, 0,
-        //     0, 0, 0, 0, 0, 0, 0, 
+        //     0, 0, 0, 0, 0, 0, 0,
         //     0, 0,
         // ];
 
         var info = [
-            "Hydrogen\nAtomic Number: 1\nAtomic Weight: 1.01\nObtained: " + count[0],
-            "Helium\nAtomic Number:2\nAtomic Weight:4.01\nObtained: " + count[1],
-            "Lithium\nAtomic Number:3\nAtomic Weight:6.94\nObtained: " + count[2],
-            "Beryllium\nAtomic Number:4\nAtomic Weight:9.01\nObtained: " + count[3],
-            "Boron\nAtomic Number:5\nAtomic Weight:10.81\nObtained: " + count[4],
-            "Carbon\nAtomic Number:6\nAtomic Weight:12.01\nObtained: " + count[5],
-            "Nitrogen\nAtomic Number:7\nAtomic Mass:14.01\nObtained: " + count[6],
-            "Oxygen\nAtomic Number:8\nAtomic Mass:16.00\nObtained: " + count[7],
-            "Fluorine\nAtomic Number:9nAtomic Mass:19.00\nObtained: " + count[8],
-            "Neon\nAtomic Number:10\nAtomic Mass:20.18\nObtained: " + count[9],
-            "Sodium\nAtomic Number:11\nAtomic Mass:22.99\nObtained: " + count[10],
-            "Magnesium\nAtomic Number:12\nAtomic Mass:24.31\nObtained: " + count[11],
-            "Aluminum\nAtomic Number:13\nAtomic Mass:26.98\nObtained: " + count[12],
-            "Silicon\nAtomic Number:14\nAtomic Mass:28.09\nObtained: " + count[13],
-            "Phosphorus\nAtomic Number:15\nAtomic Mass:30.97\nObtained: " + count[14],
-            "Sulfur\nAtomic Number:16\nAtomic Mass:32.06\nObtained: " + count[15],
-            "Chlorine\nAtomic Number:17\nAtomic Mass:35.45\nObtained: " + count[16],
-            "Argon\nAtomic Number:18\nAtomic Mass:39.95\nObtained: " + count[17],
-            "Potassium\nAtomic Number:19\nAtomic Mass:39.10\nObtained: " + count[18],
-            "Calcium\nAtomic Number:20\nAtomic Mass:40.08\nObtained: " + count[19],
+            "Hydrogen", 1, 1.01,
+            "Helium",2,4.01,
+            "Lithium",3,6.94,
+            "Beryllium",4,9.01,
+            "Boron",5,10.81,
+            "Carbon",6,12.01,
+            "Nitrogen",7,14.01,
+            "Oxygen",8,16.00,
+            "Fluorine",9,19.00,
+            "Neon",10,20.18,
+            "Sodium",11,22.99,
+            "Magnesium",12,24.31,
+            "Aluminum",13,26.98,
+            "Silicon",14,28.09,
+            "Phosphorus",15,30.97,
+            "Sulfur",16,32.06,
+            "Chlorine",17,35.45,
+            "Argon",18,39.95,
+            "Potassium",19,39.10,
+            "Calcium",20,40.08,
         ]
-        
+
         const { width, height } = this.sys.game.config;
         let background = this.add.sprite(0, 0, 'bgImage');
         background.alpha = 0.5;
@@ -67,6 +67,40 @@ export default class PauseScene extends Phaser.Scene {
 
         close.setInteractive();
 
+        const addElement = (elementIndex) => {
+          let offsetY;
+          if (elementIndex <= 1) offsetY = 250;
+          else if (elementIndex >= 2 && elementIndex <= 9) offsetY = 315;
+          else if (elementIndex < 18) offsetY = 380;
+          else offsetY = 445;
+
+          const columnXOffsets = [112, 177, 307, 372, 437, 502, 567, 632];
+          let offsetX = 112;
+          if (elementIndex === 1) offsetX = 632;
+          else if (elementIndex >= 2) offsetX = columnXOffsets[(elementIndex - 2) % columnXOffsets.length]
+
+          const element = this.add.text(offsetX, offsetY, elements[elementIndex], {
+            font: '12px monospace',
+            fill: '#000000',
+            padding: { x: 20, y: 20 },
+            backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
+          })
+            .on('pointerdown', () => {
+              document.getElementById('element-name').innerHTML = info[elementIndex][0];
+              document.getElementById('element-atomic-number').innerHTML = info[elementIndex][1];
+              document.getElementById('element-atomic-weight').innerHTML = info[elementIndex][2];
+              document.getElementById('element-obtained').innerHTML = count[elementIndex];
+              // document.getElementById('element-description').innerHTML = info[elementIndex];
+            });
+
+          element.setInteractive();
+        }
+
+        for (let i = 0; i < 20; ++i) {
+          addElement(i);
+        }
+
+        /*
         // Feels bad to hardcode
         // Better solution will come in the future
         const hydrogen = this.add.text(
@@ -79,7 +113,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[0])
         });
-        if (count[0] >= 1) 
+        if (count[0] >= 1)
             hydrogen.setInteractive()
 
 
@@ -93,7 +127,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[1])
         });
-        if (count[1] >= 1) 
+        if (count[1] >= 1)
             helium.setInteractive()
 
 
@@ -107,7 +141,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[2])
         });
-        if (count[2] >= 1) 
+        if (count[2] >= 1)
             lithium.setInteractive()
 
 
@@ -121,7 +155,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[3])
         });
-        if (count[3] >= 1) 
+        if (count[3] >= 1)
             beryllium.setInteractive()
 
 
@@ -135,7 +169,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[4])
         });
-        if (count[4] >= 1) 
+        if (count[4] >= 1)
             boron.setInteractive()
 
 
@@ -149,7 +183,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[5])
         });
-        if (count[5] >= 1) 
+        if (count[5] >= 1)
         carbon.setInteractive()
 
 
@@ -163,7 +197,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[6])
         });
-        if (count[6] >= 1) 
+        if (count[6] >= 1)
         nitrogen.setInteractive()
 
 
@@ -177,7 +211,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[7])
         });
-        if (count[7] >= 1) 
+        if (count[7] >= 1)
         oxygen.setInteractive()
 
 
@@ -191,7 +225,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[8])
         });
-        if (count[8] >= 1) 
+        if (count[8] >= 1)
         fluorine.setInteractive()
 
 
@@ -205,7 +239,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[9])
         });
-        if (count[9] >= 1) 
+        if (count[9] >= 1)
         neon.setInteractive()
 
 
@@ -219,7 +253,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[10])
         });
-        if (count[10] >= 1) 
+        if (count[10] >= 1)
         sodium.setInteractive()
 
 
@@ -233,7 +267,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[11])
         });
-        if (count[11] >= 1) 
+        if (count[11] >= 1)
         magnesium.setInteractive()
 
 
@@ -247,7 +281,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[12])
         });
-        if (count[12] >= 1) 
+        if (count[12] >= 1)
         aluminum.setInteractive()
 
 
@@ -261,7 +295,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[13])
         });
-        if (count[13] >= 1) 
+        if (count[13] >= 1)
         silicon.setInteractive()
 
 
@@ -275,7 +309,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[14])
         });
-        if (count[14] >= 1) 
+        if (count[14] >= 1)
         phosphorus.setInteractive()
 
 
@@ -289,7 +323,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[15])
         });
-        if (count[15] >= 1) 
+        if (count[15] >= 1)
         sulfur.setInteractive()
 
 
@@ -303,7 +337,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[16])
         });
-        if (count[16] >= 1) 
+        if (count[16] >= 1)
         chlorine.setInteractive()
 
 
@@ -317,7 +351,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[17])
         });
-        if (count[17] >= 1) 
+        if (count[17] >= 1)
         argon.setInteractive()
 
 
@@ -331,7 +365,7 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[18])
         });
-        if (count[18] >= 1) 
+        if (count[18] >= 1)
         potassium.setInteractive()
 
 
@@ -345,11 +379,13 @@ export default class PauseScene extends Phaser.Scene {
         .on('pointerdown', () => {
             console.log(info[19])
         });
-        if (count[19] >= 1) 
+        if (count[19] >= 1)
         calcium.setInteractive()
 
+         */
+
         // close.on('pointerover', () => { console.log('pointerover'); });
-        
+
         // let i, t;
         // t = 0;
         // var h = toString(16);
@@ -372,7 +408,7 @@ export default class PauseScene extends Phaser.Scene {
         //         .on('pointerdown', () => {
         //             console.log(info[i])
         //         });
-        //     } else {   
+        //     } else {
         //         this.add.text(
         //             100+65*m,  250 + c*60, "     ", {
         //                 padding: { x: 11, y: 20 },
