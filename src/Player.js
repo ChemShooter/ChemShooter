@@ -16,14 +16,14 @@ export default class Player extends Phaser.GameObjects.GameObject {
     const anims = scene.anims;
     anims.create({
       key: "player-walk",
-      frames: anims.generateFrameNumbers("characters", { start: 4, end: 7 }),
+      frames: anims.generateFrameNumbers("characters", { start: 124, end: 127 }),
       frameRate: 8,
       repeat: -1
     });
 
     anims.create({
       key: 'player-idle',
-      frames: anims.generateFrameNumbers('characters', { start: 0, end: 3 }),
+      frames: anims.generateFrameNumbers('characters', { start: 120, end: 123 }),
       frameRate: 8,
       repeat: -1
     })
