@@ -11,19 +11,19 @@ export default class Player extends Phaser.GameObjects.GameObject {
     super(scene, x, y);
     this.scene = scene;
     this.health = 100;
-    this.decreaseHealth = _.throttle(this.decreaseHealth, 200);
+    this.decreaseHealth = _.throttle(this.decreaseHealth, 50);
 
     const anims = scene.anims;
     anims.create({
       key: "player-walk",
-      frames: anims.generateFrameNumbers("characters", { start: 4, end: 7 }),
+      frames: anims.generateFrameNumbers("characters", { start: 124, end: 127 }),
       frameRate: 8,
       repeat: -1
     });
 
     anims.create({
       key: 'player-idle',
-      frames: anims.generateFrameNumbers('characters', { start: 0, end: 3 }),
+      frames: anims.generateFrameNumbers('characters', { start: 120, end: 123 }),
       frameRate: 8,
       repeat: -1
     })
@@ -85,15 +85,6 @@ export default class Player extends Phaser.GameObjects.GameObject {
   }
 
   decreaseHealth(amount) {
-    this.health -= amount;
-    const healthMask = this.scene.healthMask;
-    let stepWidth = healthMask.displayWidth / 100;
-
-    healthMask.x -= stepWidth;
-    if (this.health <= 0) {
-      alert("Game over!");
-    }
-
-    console.log(this.health);
+    this.scene.game.playerHealth -= amount;
   }
 }

@@ -1,11 +1,12 @@
 import Phaser from "phaser";
 import Dungeon from "@mikewesthad/dungeon";
-import Player from "./Player.js";
-import SkeletEnemy from "./enemies/SkeletEnemy";
-import MuddyEnemy from "./enemies/MuddyEnemy";
-import SwampyEnemy from "./enemies/SwampyEnemy";
-import TILES from "./TileMapping.js";
-import TilemapVisibility from "./TilemapVisibility.js";
+import Player from "../Player";
+import SkeletEnemy from "../enemies/SkeletEnemy";
+import MuddyEnemy from "../enemies/MuddyEnemy";
+import SwampyEnemy from "../enemies/SwampyEnemy";
+import TILES from "../TileMapping";
+import TilemapVisibility from "../TilemapVisibility.js";
+import _ from 'lodash';
 
 /**
  * Scene that generates a new dungeon
@@ -34,47 +35,17 @@ export default class DungeonScene extends Phaser.Scene {
       }
     );
     this.load.image('bullet', 'assets/images/bullet.png');
-    this.load.image('healthcontainer', 'healthcontainer.png');
-    this.load.image('healthbar', 'healthbar.png');
+    this.load.spritesheet('elementdrops', 'assets/images/element_drops.png', {
+      frameWidth: 16,
+      frameHeight: 16
+    });
   }
 
   create() {
-    // console.log(pointer.event);
-    this.level++;
+    ++this.level;
     this.hasPlayerReachedStairs = false;
 
-    var pauseButton = this.add.text(
-      800, 0, '||', {
-          font: "18px monospace",
-          fill: "#000000",
-          padding: { x: 7, y: 7 },
-          backgroundColor: "#cc96ff"
-    })
-    .setScrollFactor(0)
-    .setDepth(3)
-    .setOrigin(1, 0)
-    .on('pointerover', () => mousehover = true)
-    .on('pointerout', () => mousehover = false)
-    .on('pointerdown', () => {
-      this.scene.pause();
-      this.scene.launch('PauseScene');
-    });
-    pauseButton.setInteractive();
-
-
-    const openPauseScene = () => {
-      this.scene.pause();
-      this.scene.launch('PauseScene');
-    }
-
-    this.input.keyboard.on('keydown_ESC', openPauseScene);
-    this.input.keyboard.on('keydown_P', openPauseScene);
-
-    const healthContainer = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'healthcontainer');
-    const healthBar = this.add.sprite(healthContainer.x + 46, healthContainer.y, 'healthbar');
-    this.healthMask = this.add.sprite(healthBar.x, healthBar.y, 'healthbar');
-    this.healthMask.visible = false;
-    healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
+    this.scene.launch('OverlayScene', this);
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
@@ -86,11 +57,10 @@ export default class DungeonScene extends Phaser.Scene {
       doorPadding: 3,
       rooms: {
         width: {min: 15, max: 20, onlyOdd: true},
-        height: {min: 15, max: 20, onlyOdd: true}
+        height: {min: 15, max: 20, onlyOdd: true},
+				maxRooms: this.level * 4
       },
     });
-
-    this.dungeon.drawToConsole({});
 
     // Creating a blank tilemap with dimensions matching the dungeon
     const map = this.make.tilemap({
@@ -102,6 +72,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     const oldTileset = map.addTilesetImage("mytiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
     const tileset = map.addTilesetImage('tiles', null, 16, 16);
+
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
     this.wallLayer.setDepth(1);
@@ -176,10 +147,35 @@ export default class DungeonScene extends Phaser.Scene {
     const y = map.tileToWorldY(playerRoom.centerY);
     this.player = new Player(this, x, y);
 
+    // Bullets stuff
+    this.bullets = this.physics.add.group({
+        defaultKey: 'bullet',
+        maxSize: 20
+    });
+
+    this.input.on('pointerdown', this.shoot, this);
+
     // Watch the player and tilemap layers for collisions, for the duration of the scene:
     this.physics.add.collider(this.player.sprite, this.wallLayer);
-    this.physics.add.collider(this.player.sprite, this.stuffLayer);
+    this.physics.add.collider(this.player.sprite, this.stuffLayer, (player, stuff) => {
+				if (stuff.index === TILES.STAIRS) {
+					this.hasPlayerReachedStairs = true;
+					this.game.playerHealth = 100;
+					this.player.freeze();
+					const cam = this.cameras.main;
+					cam.fade(250, 0, 0, 0);
+					cam.once("camerafadeoutcomplete", () => {
+					  this.player.destroy();
+					  this.scene.restart();
+					});
+				}
+		});
     this.physics.add.collider(this.player.sprite, this.wallGroup);
+
+    // Remove bullen when it hits wall
+    this.physics.add.collider(this.bullets, this.wallLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
+    this.physics.add.collider(this.bullets, this.stuffLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
+    this.physics.add.collider(this.bullets, this.wallGroup, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
 
     const createEnemy = (room, enemyClass, offsetX, offsetY) => {
       const enemyX = map.tileToWorldX(room.centerX + offsetX);
@@ -194,6 +190,14 @@ export default class DungeonScene extends Phaser.Scene {
       this.physics.add.collider(enemy.sprite, this.player.sprite, () => {
         this.player.decreaseHealth(1);
       });
+      this.physics.add.collider(enemy.sprite, this.bullets, _.throttle((e, bullet) => {
+        bullet.setActive(false);
+        bullet.setVisible(false);
+        if (enemy.decreaseHealth(15)) {
+          enemy.destroy();
+          this.enemyGroup.remove(enemy);
+        }
+      }, 200));
     }
 
     otherRooms.forEach(room => {
@@ -243,43 +247,13 @@ export default class DungeonScene extends Phaser.Scene {
       }
     });
 
-    this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {
-      this.stuffLayer.setTileIndexCallback(TILES.STAIRS, null);
-      this.hasPlayerReachedStairs = true;
-      this.player.freeze();
-      const cam = this.cameras.main;
-      cam.fade(250, 0, 0, 0);
-      cam.once("camerafadeoutcomplete", () => {
-        this.player.destroy();
-        this.scene.restart();
-      });
-    });
-
-
     // Phaser supports multiple cameras, but you can access the default camera like this:
     const camera = this.cameras.main;
+    this.cameras.main.zoom = 2;
 
     // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.startFollow(this.player.sprite);
-
-    // Help text that has a "fixed" position on the screen
-    this.add
-      .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.level}`, {
-        font: "18px monospace",
-        fill: "#000000",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff"
-      })
-      .setScrollFactor(0).setDepth(3);
-
-    // Bullets stuff
-    this.bullets = this.physics.add.group({
-        defaultKey: 'bullet',
-        maxSize: 20
-    });
-
-    this.input.on('pointerdown', this.shoot, this);
   }
 
   shoot(pointer) {
@@ -322,7 +296,8 @@ export default class DungeonScene extends Phaser.Scene {
       const enemyY = enemy.sprite.y;
       const enemyTileX = this.groundLayer.worldToTileX(enemyX);
       const enemyTileY = this.groundLayer.worldToTileY(enemyY);
-      if (this.dungeon.getRoomAt(enemyTileX, enemyTileY) !== playerRoom) return;
+      if (this.dungeon.getRoomAt(enemyTileX, enemyTileY) !== playerRoom)
+        this.physics.velocityFromRotation(enemy.rotation, 0, enemy.sprite.body.velocity);
       const playerX = this.player.sprite.x;
       const playerY = this.player.sprite.y;
       const distance = Phaser.Math.Distance.Between(playerX, playerY, enemyX, enemyY);
@@ -332,6 +307,9 @@ export default class DungeonScene extends Phaser.Scene {
       } else {
         this.physics.velocityFromRotation(enemy.rotation, 0, enemy.sprite.body.velocity);
       }
+
+      // Update enemy's health bar
+      enemy.update();
     });
   }
 }

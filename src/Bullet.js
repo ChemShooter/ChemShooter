@@ -1,3 +1,4 @@
+/*
 export default class Bullet extends Phaser.GameObjects.Image {
 	constructor(scene) {
 	  console.log('initialized');
@@ -51,3 +52,4 @@ export default class Bullet extends Phaser.GameObjects.Image {
 	}
 
 }
+*/
