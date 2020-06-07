@@ -16,7 +16,7 @@ export default class GameOverScene extends Phaser.Scene {
     let background = this.add.sprite(0, 0, 'loseImg');
     background.setOrigin(0, 0);
 
-    let finalScore = this.add.text(width / 2, height / 2-160, 'Final Score: -1', {
+    let finalScore = this.add.text(width / 2, height / 2-160, `Final Floor: ${this.dungeonScene.level}`, {
       font: "12px monospace",
       fill: "#D84525"
     })
