@@ -9,10 +9,10 @@ export default class PauseScene extends Phaser.Scene {
 
     create() {
         var elements = [
-            "H : ", "He: ",
-            "Li: ", "Be: ", "B : ", "C : ", "N : ", "O : ", "F : ", "Ne: ",
-            "Na: ", "Mg: ", "Al: ", "Si: ", "P : ", "S : ", "Cl: ", "Ar: ",
-            "K : ", "Ca: ",
+            "H ", "He",
+            "Li", "Be", "B ", "C ", "N ", "O ", "F ", "Ne",
+            "Na", "Mg", "Al", "Si", "P ", "S ", "Cl", "Ar",
+            "K ", "Ca",
         ];
         
         var count = this.game.elementAmounts
@@ -24,26 +24,26 @@ export default class PauseScene extends Phaser.Scene {
         // ];
 
         var info = [
-            "Hydrogen\nAtomic Number:1\nAtomic Weight:1.01",
-            "Helium\nAtomic Number:2\nAtomic Weight:4.01",
-            "Lithium\nAtomic Number:3\nAtomic Weight:6.94",
-            "Beryllium\nAtomic Number:4\nAtomic Weight:9.01",
-            "Boron\nAtomic Number:5\nAtomic Weight:10.81",
-            "Carbon\nAtomic Number:6\nAtomic Weight:12.01",
-            "Nitrogen\nAtomic Number:7\nAtomic Mass:14.01",
-            "Oxygen\nAtomic Number:8\nAtomic Mass:16.00",
-            "Fluorine\nAtomic Number:9nAtomic Mass:19.00",
-            "Neon\nAtomic Number:10\nAtomic Mass:20.18",
-            "Sodium\nAtomic Number:11\nAtomic Mass:22.99",
-            "Magnesium\nAtomic Number:12\nAtomic Mass:24.31",
-            "Aluminum\nAtomic Number:13\nAtomic Mass:26.98",
-            "Silicon\nAtomic Number:14\nAtomic Mass:28.09",
-            "Phosphorus\nAtomic Number:15\nAtomic Mass:30.97",
-            "Sulfur\nAtomic Number:16\nAtomic Mass:32.06",
-            "Chlorine\nAtomic Number:17\nAtomic Mass:35.45",
-            "Argon\nAtomic Number:18\nAtomic Mass:39.95",
-            "Potassium\nAtomic Number:19\nAtomic Mass:39.10",
-            "Calcium\nAtomic Number:20\nAtomic Mass:40.08",
+            "Hydrogen\nAtomic Number: 1\nAtomic Weight: 1.01\nObtained: " + count[0],
+            "Helium\nAtomic Number:2\nAtomic Weight:4.01\nObtained: " + count[1],
+            "Lithium\nAtomic Number:3\nAtomic Weight:6.94\nObtained: " + count[2],
+            "Beryllium\nAtomic Number:4\nAtomic Weight:9.01\nObtained: " + count[3],
+            "Boron\nAtomic Number:5\nAtomic Weight:10.81\nObtained: " + count[4],
+            "Carbon\nAtomic Number:6\nAtomic Weight:12.01\nObtained: " + count[5],
+            "Nitrogen\nAtomic Number:7\nAtomic Mass:14.01\nObtained: " + count[6],
+            "Oxygen\nAtomic Number:8\nAtomic Mass:16.00\nObtained: " + count[7],
+            "Fluorine\nAtomic Number:9nAtomic Mass:19.00\nObtained: " + count[8],
+            "Neon\nAtomic Number:10\nAtomic Mass:20.18\nObtained: " + count[9],
+            "Sodium\nAtomic Number:11\nAtomic Mass:22.99\nObtained: " + count[10],
+            "Magnesium\nAtomic Number:12\nAtomic Mass:24.31\nObtained: " + count[11],
+            "Aluminum\nAtomic Number:13\nAtomic Mass:26.98\nObtained: " + count[12],
+            "Silicon\nAtomic Number:14\nAtomic Mass:28.09\nObtained: " + count[13],
+            "Phosphorus\nAtomic Number:15\nAtomic Mass:30.97\nObtained: " + count[14],
+            "Sulfur\nAtomic Number:16\nAtomic Mass:32.06\nObtained: " + count[15],
+            "Chlorine\nAtomic Number:17\nAtomic Mass:35.45\nObtained: " + count[16],
+            "Argon\nAtomic Number:18\nAtomic Mass:39.95\nObtained: " + count[17],
+            "Potassium\nAtomic Number:19\nAtomic Mass:39.10\nObtained: " + count[18],
+            "Calcium\nAtomic Number:20\nAtomic Mass:40.08\nObtained: " + count[19],
         ]
         
         const { width, height } = this.sys.game.config;
@@ -52,7 +52,7 @@ export default class PauseScene extends Phaser.Scene {
         background.setOrigin(0, 0);
 
         let close = this.add.text(
-            width/2, height/2-70, 'Return to Game', {
+            width/2, height/2-120, 'Return to Game', {
                 font: "18px monospace",
                 fill: "#000000",
                 padding: { x: 20, y: 10 },
@@ -67,14 +67,14 @@ export default class PauseScene extends Phaser.Scene {
 
         close.setInteractive();
 
-        // Feels bad to hardcode (it was the best alternative for hackathon)
+        // Feels bad to hardcode
         // Better solution will come in the future
         const hydrogen = this.add.text(
-            85, 300, elements[0] + count[0], {
+            112,  250, elements[0], {
                 font: "12px monospace",
                 fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-10*count[0])).toString(16) + (255).toString(16)
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
             console.log(info[0])
@@ -84,11 +84,11 @@ export default class PauseScene extends Phaser.Scene {
 
 
         const helium = this.add.text(
-            660, 300, elements[1] + count[1], {
+            632,  250, elements[1], {
                 font: "12px monospace",
                 fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[1])).toString(16) + (255).toString(16)
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[1])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
             console.log(info[1])
@@ -98,11 +98,11 @@ export default class PauseScene extends Phaser.Scene {
 
 
         const lithium = this.add.text(
-            85, 360, elements[2] + count[2], {
+            112, 315, elements[2], {
                 font: "12px monospace",
                 fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[2])).toString(16) + (255).toString(16)
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[2])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
             console.log(info[2])
@@ -112,19 +112,241 @@ export default class PauseScene extends Phaser.Scene {
 
 
         const beryllium = this.add.text(
-            85, 360, elements[2] + count[2], {
+            177, 315, elements[3], {
                 font: "12px monospace",
                 fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[2])).toString(16) + (255).toString(16)
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[3])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[2])
+            console.log(info[3])
         });
-        if (count[2] >= 1) 
+        if (count[3] >= 1) 
             beryllium.setInteractive()
 
 
+        const boron = this.add.text(
+            307, 315, elements[4], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[4])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[4])
+        });
+        if (count[4] >= 1) 
+            boron.setInteractive()
+
+
+        const carbon = this.add.text(
+            372, 315, elements[5], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[5])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[5])
+        });
+        if (count[5] >= 1) 
+        carbon.setInteractive()
+
+
+        const nitrogen = this.add.text(
+            437, 315, elements[6], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[6])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[6])
+        });
+        if (count[6] >= 1) 
+        nitrogen.setInteractive()
+
+
+        const oxygen = this.add.text(
+            502, 315, elements[7], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[7])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[7])
+        });
+        if (count[7] >= 1) 
+        oxygen.setInteractive()
+
+
+        const fluorine = this.add.text(
+            567, 315, elements[8], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[8])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[8])
+        });
+        if (count[8] >= 1) 
+        fluorine.setInteractive()
+
+
+        const neon = this.add.text(
+            632, 315, elements[9], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[9])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[9])
+        });
+        if (count[9] >= 1) 
+        neon.setInteractive()
+
+
+        const sodium = this.add.text(
+            112, 380, elements[10], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[10])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[10])
+        });
+        if (count[10] >= 1) 
+        sodium.setInteractive()
+
+
+        const magnesium = this.add.text(
+            177, 380, elements[11], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[11])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[11])
+        });
+        if (count[11] >= 1) 
+        magnesium.setInteractive()
+
+
+        const aluminum = this.add.text(
+            307, 380, elements[12], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[12])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[12])
+        });
+        if (count[12] >= 1) 
+        aluminum.setInteractive()
+
+
+        const silicon = this.add.text(
+            372, 380, elements[13], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[13])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[13])
+        });
+        if (count[13] >= 1) 
+        silicon.setInteractive()
+
+
+        const phosphorus = this.add.text(
+            437, 380, elements[14], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[14])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[14])
+        });
+        if (count[14] >= 1) 
+        phosphorus.setInteractive()
+
+
+        const sulfur = this.add.text(
+            502, 380, elements[15], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[15])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[15])
+        });
+        if (count[15] >= 1) 
+        sulfur.setInteractive()
+
+
+        const chlorine = this.add.text(
+            567, 380, elements[16], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[16])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[16])
+        });
+        if (count[16] >= 1) 
+        chlorine.setInteractive()
+
+
+        const argon = this.add.text(
+            632, 380, elements[17], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[17])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[17])
+        });
+        if (count[17] >= 1) 
+        argon.setInteractive()
+
+
+        const potassium = this.add.text(
+            112, 445, elements[18], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[18])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[18])
+        });
+        if (count[18] >= 1) 
+        potassium.setInteractive()
+
+
+        const calcium = this.add.text(
+            177, 445, elements[19], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 20, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[19])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[19])
+        });
+        if (count[19] >= 1) 
+        calcium.setInteractive()
 
         // close.on('pointerover', () => { console.log('pointerover'); });
         
@@ -140,7 +362,7 @@ export default class PauseScene extends Phaser.Scene {
         //     if (elements[i] != "    ") {
         //         t += 7;
         //         this.add.text(
-        //             100+65*m, 300 + c*60, elements[i] + +count[i], {
+        //             100+65*m,  250 + c*60, elements[i] + +count[i], {
         //                 font: "12px monospace",
         //                 fill: "#000000",
         //                 padding: { x: 11, y: 20 },
@@ -152,7 +374,7 @@ export default class PauseScene extends Phaser.Scene {
         //         });
         //     } else {   
         //         this.add.text(
-        //             100+65*m, 300 + c*60, "     ", {
+        //             100+65*m,  250 + c*60, "     ", {
         //                 padding: { x: 11, y: 20 },
         //                 // backgroundColor: "#" + (255).toString(16) + (225-10*i).toString(16) + (255).toString(16)
         //         });
