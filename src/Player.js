@@ -94,6 +94,5 @@ export default class Player extends Phaser.GameObjects.GameObject {
       alert("Game over!");
     }
 
-    console.log(this.health);
   }
 }
