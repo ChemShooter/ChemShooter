@@ -53,7 +53,8 @@ export default class DungeonScene extends Phaser.Scene {
       doorPadding: 3,
       rooms: {
         width: {min: 15, max: 20, onlyOdd: true},
-        height: {min: 15, max: 20, onlyOdd: true}
+        height: {min: 15, max: 20, onlyOdd: true},
+				maxRooms: 10
       },
     });
 
@@ -151,7 +152,17 @@ export default class DungeonScene extends Phaser.Scene {
 
     // Watch the player and tilemap layers for collisions, for the duration of the scene:
     this.physics.add.collider(this.player.sprite, this.wallLayer);
-    this.physics.add.collider(this.player.sprite, this.stuffLayer);
+    this.physics.add.collider(this.player.sprite, this.stuffLayer, (player, stuff) => {
+		  this.hasPlayerReachedStairs = true;
+      this.player.freeze();
+      const cam = this.cameras.main;
+      cam.fade(250, 0, 0, 0);
+      cam.once("camerafadeoutcomplete", () => {
+        this.player.destroy();
+        this.scene.restart();
+      });
+	
+		} );
     this.physics.add.collider(this.player.sprite, this.wallGroup);
 
     // Remove bullen when it hits wall
@@ -227,18 +238,6 @@ export default class DungeonScene extends Phaser.Scene {
           wall.body.setSize(4, 16).setOffset(12, 0);
         }
       }
-    });
-
-    this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {
-      this.stuffLayer.setTileIndexCallback(TILES.STAIRS, null);
-      this.hasPlayerReachedStairs = true;
-      this.player.freeze();
-      const cam = this.cameras.main;
-      cam.fade(250, 0, 0, 0);
-      cam.once("camerafadeoutcomplete", () => {
-        this.player.destroy();
-        this.scene.restart();
-      });
     });
 
     // Phaser supports multiple cameras, but you can access the default camera like this:
