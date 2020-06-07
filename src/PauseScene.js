@@ -53,7 +53,7 @@ export default class PauseScene extends Phaser.Scene {
             "Potassium",
             "Calcium - ",
         ]
-        
+
         const { width, height } = this.sys.game.config;
         let background = this.add.sprite(0, 0, 'bgImage');
         background.alpha = 0.5;
@@ -74,8 +74,7 @@ export default class PauseScene extends Phaser.Scene {
         });
 
         close.setInteractive();
-        // close.on('pointerover', () => { console.log('pointerover'); });
-        
+
         let i, t;
         t = 0;
         // var h = toString(16);
@@ -87,7 +86,6 @@ export default class PauseScene extends Phaser.Scene {
             // console.out(i, c);
             if (elements[i] != "    ") {
                 t += 7;
-                console.log(t);
                 this.add.text(
                     100+65*m, 300 + c*60, elements[i] + +amounts[i], {
                         font: "12px monospace",
@@ -95,7 +93,7 @@ export default class PauseScene extends Phaser.Scene {
                         padding: { x: 11, y: 20 },
                         backgroundColor: "#" + (255).toString(16) + (225-t).toString(16) + (255).toString(16)
                 });
-            } else {   
+            } else {
                 this.add.text(
                     100+65*m, 300 + c*60, "     ", {
                         padding: { x: 11, y: 20 },

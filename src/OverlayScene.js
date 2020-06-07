@@ -43,13 +43,13 @@ export default class OverlayScene extends Phaser.Scene {
       .on('pointerover', () => mousehover = true)
       .on('pointerout', () => mousehover = false)
       .on('pointerdown', () => {
-        this.scene.pause();
+        this.dungeonScene.scene.pause();
         this.scene.launch('PauseScene');
       });
     pauseButton.setInteractive();
 
     const openPauseScene = () => {
-      this.scene.pause();
+      this.dungeonScene.scene.pause();
       this.scene.launch('PauseScene');
     }
 
@@ -86,7 +86,6 @@ export default class OverlayScene extends Phaser.Scene {
     if (this.prevHealth === this.game.playerHealth) return;
     this.prevHealth = this.game.playerHealth;
     let stepWidth = this.healthMask.displayWidth / 100;
-    console.log(this.game.playerHealth);
 
     this.healthMask.x -= stepWidth;
     if (this.game.playerHealth <= 0) {
