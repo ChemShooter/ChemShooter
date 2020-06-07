@@ -29,8 +29,6 @@ export default class HealthBar {
 	}
 
   draw () {
-		this.healthBar.clear();
-
     this.healthBar.fillStyle(0x000000);
     this.healthBar.fillRect(this.x, this.y, this.width, this.height);
 
