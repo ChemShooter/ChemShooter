@@ -54,7 +54,7 @@ export default class DungeonScene extends Phaser.Scene {
       rooms: {
         width: {min: 15, max: 20, onlyOdd: true},
         height: {min: 15, max: 20, onlyOdd: true},
-				maxRooms: 10
+				maxRooms: 3
       },
     });
 
@@ -153,18 +153,19 @@ export default class DungeonScene extends Phaser.Scene {
     // Watch the player and tilemap layers for collisions, for the duration of the scene:
     this.physics.add.collider(this.player.sprite, this.wallLayer);
     this.physics.add.collider(this.player.sprite, this.stuffLayer, (player, stuff) => {
-		  this.hasPlayerReachedStairs = true;
-      this.player.freeze();
-      const cam = this.cameras.main;
-      cam.fade(250, 0, 0, 0);
-      cam.once("camerafadeoutcomplete", () => {
-        this.player.destroy();
-        this.scene.restart();
-      });
-	
-		} );
+				if (stuff.index === TILES.STAIRS) {
+					this.hasPlayerReachedStairs = true;
+					this.player.freeze();
+					const cam = this.cameras.main;
+					cam.fade(250, 0, 0, 0);
+					cam.once("camerafadeoutcomplete", () => {
+					  this.player.destroy();
+					  this.scene.restart();
+					});
+				}
+		}); 
     this.physics.add.collider(this.player.sprite, this.wallGroup);
-
+	
     // Remove bullen when it hits wall
     this.physics.add.collider(this.bullets, this.wallLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
     this.physics.add.collider(this.bullets, this.stuffLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
