@@ -11,7 +11,7 @@ export default class Player extends Phaser.GameObjects.GameObject {
     super(scene, x, y);
     this.scene = scene;
     this.health = 100;
-    this.decreaseHealth = _.throttle(this.decreaseHealth, 200);
+    this.decreaseHealth = _.throttle(this.decreaseHealth, 50);
 
     const anims = scene.anims;
     anims.create({
