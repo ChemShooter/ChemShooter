@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import DungeonScene from './DungeonScene';
-import PauseScene from './PauseScene';
-import OverlayScene from "./OverlayScene";
+import DungeonScene from './scenes/DungeonScene';
+import PauseScene from './scenes/PauseScene';
+import OverlayScene from "./scenes/OverlayScene";
+import IntroScene from "./scenes/IntroScene";
 
 const config = {
   type: Phaser.AUTO, // Which renderer to use
@@ -9,7 +10,7 @@ const config = {
   height: 600, // Canvas height in pixels
   parent: "game-container", // ID of the DOM element to add the canvas to
   pixelArt: true,
-  scene: [ DungeonScene, PauseScene, OverlayScene ],
+  scene: [ IntroScene, DungeonScene, PauseScene, OverlayScene, ],
   physics: {
     default: 'arcade',
     arcade: {
@@ -23,7 +24,7 @@ const game = new Phaser.Game(config);
 game.playerHealth = 100;
 game.isPaused = false;
 game.elementAmounts = [
-  0, 0, 
+  0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0

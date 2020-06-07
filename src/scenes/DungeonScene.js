@@ -1,11 +1,11 @@
 import Phaser from "phaser";
 import Dungeon from "@mikewesthad/dungeon";
-import Player from "./Player.js";
-import SkeletEnemy from "./enemies/SkeletEnemy";
-import MuddyEnemy from "./enemies/MuddyEnemy";
-import SwampyEnemy from "./enemies/SwampyEnemy";
-import TILES from "./TileMapping.js";
-import TilemapVisibility from "./TilemapVisibility.js";
+import Player from "../Player";
+import SkeletEnemy from "../enemies/SkeletEnemy";
+import MuddyEnemy from "../enemies/MuddyEnemy";
+import SwampyEnemy from "../enemies/SwampyEnemy";
+import TILES from "../TileMapping";
+import TilemapVisibility from "../TilemapVisibility.js";
 import _ from 'lodash';
 
 /**
@@ -160,6 +160,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(this.player.sprite, this.stuffLayer, (player, stuff) => {
 				if (stuff.index === TILES.STAIRS) {
 					this.hasPlayerReachedStairs = true;
+					this.game.playerHealth = 100;
 					this.player.freeze();
 					const cam = this.cameras.main;
 					cam.fade(250, 0, 0, 0);
