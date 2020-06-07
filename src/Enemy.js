@@ -31,7 +31,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     this.sprite.anims.play(`${name}-enemy-walk`);
 
-		this.healthBar = new HealthBar(scene, x, y, 100 + 0.5 * this.scene.level);
+		this.healthBar = new HealthBar(scene, x, y, 100 + 1.5 * this.scene.level);
   }
 
   update() {
