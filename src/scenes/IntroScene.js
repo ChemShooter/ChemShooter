@@ -17,7 +17,7 @@ export default class IntroScene extends Phaser.Scene {
       font: "18px monospace",
       fill: "#D84525",
       padding: {x: 20, y: 10},
-      backgroundColor: "#2e2e2e"
+      backgroundColor: "#4b4b4b"
     })
       .setInteractive()
       .setOrigin(0.5, 0.5)
