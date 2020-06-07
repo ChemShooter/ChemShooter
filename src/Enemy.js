@@ -38,7 +38,15 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 		this.healthBar.draw();
   }
 
+	decreaseHealth(amount) {
+		return this.healthBar.decrease(amount);
+	}
+
   destroy() {
+		super.destroy();
     this.sprite.destroy();
+
+		this.healthBar.healthBar.clear();
+		delete this.healthBar;
   }
 }

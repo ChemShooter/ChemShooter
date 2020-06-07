@@ -21,6 +21,38 @@ export default class PauseScene extends Phaser.Scene {
             0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0
         ];
+
+        var descriptions = [
+            "Hydrogen",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "Helium",
+            "Lithium",
+            "Beryllium",
+            "    ",
+            "Boron",
+            "Carbon",
+            "Nitrogen",
+            "Oxygen",
+            "Fluorine",
+            "Neon",
+            "Sodium",
+            "Magnesium",
+            "    ",
+            "Aluminum",
+            "Silicon",
+            "Phosphorus",
+            "Sulfur",
+            "Chlorine",
+            "Argon",
+            "Potassium",
+            "Calcium - ",
+        ]
         
         const { width, height } = this.sys.game.config;
         let background = this.add.sprite(0, 0, 'bgImage');
