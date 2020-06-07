@@ -8,6 +8,8 @@ export default class PauseScene extends Phaser.Scene {
     }
 
     create() {
+        // this.image.destroy();
+        this.scene.bringToTop();
         var elements = [
             "H ", "He",
             "Li", "Be", "B ", "C ", "N ", "O ", "F ", "Ne",
@@ -153,5 +155,9 @@ export default class PauseScene extends Phaser.Scene {
         //     }
         // }
     }
+
+    // infoscreen() {
+    //     // this.scene.pause();
+    // } 
 }
 
