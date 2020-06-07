@@ -10,7 +10,7 @@ The game is hosted on Heroku at https://chemshooter.herokuapp.com/
 
 To run the game locally, clone this repo.
 
-Run `yarn install` or `npm install` in the root directory of the folder.
+Run `yarn install` or `npm install` in the root directory of this repository.
 
 Then, run `yarn build` or `npm run build` for webpack to bundle all the dependencies into a single `dist` folder.
 
