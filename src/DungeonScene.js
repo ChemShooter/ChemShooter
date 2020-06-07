@@ -263,7 +263,7 @@ export default class DungeonScene extends Phaser.Scene {
     const healthContainer = this.add.sprite(0, gameHeight, 'healthcontainer');
     healthContainer.setDepth(10).setScrollFactor(0).setOrigin(0, 1).setScale(0.4, 0.4);
     const healthBar = this.add.sprite(healthContainer.x + 46, healthContainer.y, 'healthbar');
-    healthBar.setDepth(10).setScrollFactor(0);
+    healthBar.setDepth(11).setScrollFactor(0).setOrigin(0, 1).setScale(0.2, 0.2);
     this.healthMask = this.add.sprite(healthBar.x, healthBar.y, 'healthbar');
     this.healthMask.visible = false;
     healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
