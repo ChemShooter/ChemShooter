@@ -154,7 +154,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(this.player.sprite, this.stuffLayer);
     this.physics.add.collider(this.player.sprite, this.wallGroup);
 
-		// Remove bullen when it hits wall
+    // Remove bullen when it hits wall
     this.physics.add.collider(this.bullets, this.wallLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
     this.physics.add.collider(this.bullets, this.stuffLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
     this.physics.add.collider(this.bullets, this.wallGroup, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
@@ -173,12 +173,12 @@ export default class DungeonScene extends Phaser.Scene {
         this.player.decreaseHealth(1);
       });
       this.physics.add.collider(enemy.sprite, this.bullets, _.throttle((e, bullet) => {
-				bullet.setActive(false);
-				bullet.setVisible(false);
+        bullet.setActive(false);
+        bullet.setVisible(false);
         if (enemy.decreaseHealth(15)) {
-					enemy.destroy();
-					this.enemyGroup.remove(enemy);
-				}
+          enemy.destroy();
+          this.enemyGroup.remove(enemy);
+        }
       }, 200));
     }
 
@@ -258,7 +258,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.input.on('pointerdown', this.shoot, this);
   }
 
-	shoot(pointer) {
+  shoot(pointer) {
     if (!mousehover) {
       var bullet = this.bullets.get(this.player.sprite.x, this.player.sprite.y + this.player.sprite.height/4);
       if (bullet) {
@@ -310,8 +310,8 @@ export default class DungeonScene extends Phaser.Scene {
         this.physics.velocityFromRotation(enemy.rotation, 0, enemy.sprite.body.velocity);
       }
 
-			// Update enemy's health bar
-			enemy.update();
+      // Update enemy's health bar
+      enemy.update();
     });
   }
 }
