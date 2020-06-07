@@ -15,38 +15,45 @@ export default class PauseScene extends Phaser.Scene {
             "K : ", "Ca: ",
         ];
 
-        var descriptions = [
-            "Hydrogen - very flammable",
-            "    ",
-            "    ",
-            "    ",
-            "    ",
-            "    ",
-            "    ",
-            "    ",
-            "Helium",
-            "Lithium",
-            "Beryllium",
-            "    ",
-            "Boron",
-            "Carbon",
-            "Nitrogen",
-            "Oxygen",
-            "Fluorine",
-            "Neon",
-            "Sodium",
-            "Magnesium",
-            "    ",
-            "Aluminum",
-            "Silicon",
-            "Phosphorus",
-            "Sulfur",
-            "Chlorine",
-            "Argon",
-            "Potassium",
-            "Calcium - ",
-        ]
+        var amounts = [
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0
+        ];
 
+        var descriptions = [
+            "Hydrogen - very flammable!",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "    ",
+            "Helium - makes you sound like a 9 year old!",
+            "Lithium - drop this in water and it goes boom!",
+            "Beryllium - used for high speed aircraft!",
+            "    ",
+            "Boron - used in medicine to improve thinking skills!",
+            "Carbon - diamonds = graphite = made from carbon!",
+            "Nitrogen - necessary for growing hearty crops!",
+            "Oxygen - it is all around us!",
+            "Fluorine - makes sure your teeth stays clean!",
+            "Neon - lights up a nightclub at 2 am!",
+            "Sodium - season with sodium chloride and pepper!",
+            "Magnesium - don't confuse this element with manganese!",
+            "    ",
+            "Aluminum - the optimal material for planes!",
+            "Silicon - found in computer chips!",
+            "Phosphorus - it exists in 2 colours, white and red!",
+            "Sulfur - light up a bonfire with a match to cook some s'mores!",
+            "Chlorine - do you like the smell of pool water?",
+            "Argon - third most abundant gas in the Earth's atmosphere!",
+            "Potassium - don't go bananas over the fact that its found in bananas!",
+            "Calcium - makes your bones nice and strong!",
+        ]
+        
         const { width, height } = this.sys.game.config;
         let background = this.add.sprite(0, 0, 'bgImage');
         background.alpha = 0.5;
@@ -67,7 +74,8 @@ export default class PauseScene extends Phaser.Scene {
         });
 
         close.setInteractive();
-
+        // close.on('pointerover', () => { console.log('pointerover'); });
+        
         let i, t;
         t = 0;
         // var h = toString(16);
@@ -79,14 +87,16 @@ export default class PauseScene extends Phaser.Scene {
             // console.out(i, c);
             if (elements[i] != "    ") {
                 t += 7;
+                console.log(t);
                 this.add.text(
-                    100+65*m, 300 + c*60, elements[i] + this.game.elementAmounts[i], {
+                    100+65*m, 300 + c*60, elements[i] + +amounts[i], {
                         font: "12px monospace",
                         fill: "#000000",
                         padding: { x: 11, y: 20 },
                         backgroundColor: "#" + (255).toString(16) + (225-t).toString(16) + (255).toString(16)
-                });
-            } else {
+                })
+                // .;
+            } else {   
                 this.add.text(
                     100+65*m, 300 + c*60, "     ", {
                         padding: { x: 11, y: 20 },
