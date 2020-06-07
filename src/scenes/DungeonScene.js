@@ -204,7 +204,8 @@ export default class DungeonScene extends Phaser.Scene {
       }, 200));
     }
 
-    otherRooms.forEach(room => {
+
+    [...otherRooms, endRoom].forEach(room => {
       createEnemy(room, SkeletEnemy, -3, -3);
       createEnemy(room, SwampyEnemy, -3, 3);
       createEnemy(room, MuddyEnemy, 3, 3);
