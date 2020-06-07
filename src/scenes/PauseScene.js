@@ -11,10 +11,10 @@ export default class PauseScene extends Phaser.Scene {
         // this.image.destroy();
         this.scene.bringToTop();
         var elements = [
-            "H ", "He",
-            "Li", "Be", "B ", "C ", "N ", "O ", "F ", "Ne",
-            "Na", "Mg", "Al", "Si", "P ", "S ", "Cl", "Ar",
-            "K ", "Ca",
+            "H", "He",
+            "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+            "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
+            "K", "Ca",
         ];
 
         var count = this.game.elementAmounts;
@@ -158,6 +158,6 @@ export default class PauseScene extends Phaser.Scene {
 
     // infoscreen() {
     //     // this.scene.pause();
-    // } 
+    // }
 }
 

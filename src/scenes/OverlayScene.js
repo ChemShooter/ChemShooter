@@ -90,7 +90,7 @@ export default class OverlayScene extends Phaser.Scene {
     this.healthMask.x -= stepWidth;
     if (this.game.playerHealth <= 0) {
       this.scene.stop('DungeonScene');
-      this.scene.launch('GameOverScene',  this.dungeonScene.restartScene);
+      this.scene.launch('GameOverScene',  this.dungeonScene);
     }
   }
 }
