@@ -8,6 +8,8 @@ export default class PauseScene extends Phaser.Scene {
     }
 
     create() {
+        // this.image.destroy();
+        this.scene.bringToTop();
         var elements = [
             "H ", "He",
             "Li", "Be", "B ", "C ", "N ", "O ", "F ", "Ne",
@@ -77,10 +79,12 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[0])
+            if (count[0] >= 1)
+                console.log(info[0])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[0] >= 1) 
-            hydrogen.setInteractive()
+        hydrogen.setInteractive()
 
 
         const helium = this.add.text(
@@ -91,11 +95,12 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[1])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[1])
-        });
-        if (count[1] >= 1) 
-            helium.setInteractive()
-
+            if (count[1] >= 1)
+                console.log(info[1])
+            else
+                console.log("You haven't found this element")
+        }); 
+        helium.setInteractive()
 
         const lithium = this.add.text(
             112, 315, elements[2], {
@@ -105,11 +110,12 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[2])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[2])
+            if (count[2] >= 1)
+                console.log(info[2])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[2] >= 1) 
-            lithium.setInteractive()
-
+        lithium.setInteractive()
 
         const beryllium = this.add.text(
             177, 315, elements[3], {
@@ -119,10 +125,12 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[3])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[3])
+            if (count[3] >= 1)
+                console.log(info[3])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[3] >= 1) 
-            beryllium.setInteractive()
+        beryllium.setInteractive()
 
 
         const boron = this.add.text(
@@ -133,10 +141,12 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[4])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[4])
+            if (count[4] >= 1)
+                console.log(info[4])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[4] >= 1) 
-            boron.setInteractive()
+        boron.setInteractive()
 
 
         const carbon = this.add.text(
@@ -147,9 +157,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[5])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[5])
+            if (count[5] >= 1)
+                console.log(info[5])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[5] >= 1) 
         carbon.setInteractive()
 
 
@@ -161,9 +173,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[6])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[6])
+            if (count[6] >= 1)
+                console.log(info[6])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[6] >= 1) 
         nitrogen.setInteractive()
 
 
@@ -175,9 +189,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[7])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[7])
+            if (count[7] >= 1)
+                console.log(info[7])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[7] >= 1) 
         oxygen.setInteractive()
 
 
@@ -189,9 +205,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[8])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[8])
+            if (count[8] >= 1)
+                console.log(info[8])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[8] >= 1) 
         fluorine.setInteractive()
 
 
@@ -203,10 +221,13 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[9])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[9])
+            if (count[9] >= 1)
+                console.log(info[9])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[9] >= 1) 
         neon.setInteractive()
+
 
 
         const sodium = this.add.text(
@@ -217,9 +238,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[10])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[10])
+            if (count[10] >= 1)
+                console.log(info[10])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[10] >= 1) 
         sodium.setInteractive()
 
 
@@ -231,11 +254,12 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[11])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[11])
+            if (count[11] >= 1)
+                console.log(info[11])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[11] >= 1) 
         magnesium.setInteractive()
-
 
         const aluminum = this.add.text(
             307, 380, elements[12], {
@@ -245,9 +269,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[12])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[12])
+            if (count[12] >= 1)
+                console.log(info[12])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[12] >= 1) 
         aluminum.setInteractive()
 
 
@@ -259,9 +285,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[13])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[13])
+            if (count[13] >= 1)
+                console.log(info[13])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[13] >= 1) 
         silicon.setInteractive()
 
 
@@ -273,9 +301,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[14])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[14])
+            if (count[14] >= 1)
+                console.log(info[14])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[14] >= 1) 
         phosphorus.setInteractive()
 
 
@@ -287,9 +317,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[15])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[15])
+            if (count[15] >= 1)
+                console.log(info[15])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[15] >= 1) 
         sulfur.setInteractive()
 
 
@@ -301,9 +333,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[16])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[16])
+            if (count[16] >= 1)
+                console.log(info[16])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[16] >= 1) 
         chlorine.setInteractive()
 
 
@@ -315,9 +349,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[17])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[17])
+            if (count[17] >= 1)
+                console.log(info[17])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[17] >= 1) 
         argon.setInteractive()
 
 
@@ -329,9 +365,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[18])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[18])
+            if (count[18] >= 1)
+                console.log(info[18])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[18] >= 1) 
         potassium.setInteractive()
 
 
@@ -343,9 +381,11 @@ export default class PauseScene extends Phaser.Scene {
                 backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[19])).toString(16) + (255).toString(16)
         })
         .on('pointerdown', () => {
-            console.log(info[19])
+            if (count[19] >= 1)
+                console.log(info[19])
+            else
+                console.log("You haven't found this element")
         });
-        if (count[19] >= 1) 
         calcium.setInteractive()
 
         // close.on('pointerover', () => { console.log('pointerover'); });
@@ -381,5 +421,9 @@ export default class PauseScene extends Phaser.Scene {
         //     }
         // }
     }
+
+    // infoscreen() {
+    //     // this.scene.pause();
+    // } 
 }
 

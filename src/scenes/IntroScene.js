@@ -4,24 +4,25 @@ export default class IntroScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("bgImage", "assets/images/main_menu_scene.png");
+    this.load.image("mainM", "assets/images/introscreen_chemshooter.png");
   }
 
   create() {
     const {width, height} = this.sys.game.config;
-    let background = this.add.sprite(0, 0, 'bgImage');
-    background.alpha = 0.5;
+    let background = this.add.sprite(0, 0, 'mainM');
+    // background.alpha = 0.5;
     background.setOrigin(0, 0);
 
-    let startGame = this.add.text(width / 2, height / 2, 'Start Game', {
+    let startGame = this.add.text(width/2, height/2-100, 'Start Game', {
       font: "18px monospace",
-      fill: "#000000",
+      fill: "#D84525",
       padding: {x: 20, y: 10},
-      backgroundColor: "#ffffff"
+      backgroundColor: "#2e2e2e"
     })
       .setInteractive()
       .setOrigin(0.5, 0.5)
       .on('pointerdown', () => {
+        background.destroy()
         this.scene.stop()
         this.scene.launch('DungeonScene')
       });
