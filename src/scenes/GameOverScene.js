@@ -33,8 +33,8 @@ export default class GameOverScene extends Phaser.Scene {
           0, 0, 0, 0, 0, 0, 0, 0, 0,
           0, 0
         ];
-        
-        this.dungeonScene.restart();
+
+        this.dungeonScene.restartScene();
       });
   }
 }
