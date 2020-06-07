@@ -7,8 +7,8 @@ export default class GameOverScene extends Phaser.Scene {
     this.load.image("loseImg", "assets/images/game_over.png");
   }
 
-  init(restartDungeonScene) {
-    this.restartDungeonScene = restartDungeonScene;
+  init(dungeonScene) {
+    this.dungeonScene = dungeonScene;
   }
 
   create() {
@@ -33,8 +33,8 @@ export default class GameOverScene extends Phaser.Scene {
           0, 0, 0, 0, 0, 0, 0, 0, 0,
           0, 0
         ];
-
-        this.restartDungeonScene();
+        
+        this.dungeonScene.restart();
       });
   }
 }
