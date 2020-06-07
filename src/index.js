@@ -17,10 +17,14 @@ const config = {
 			debug: false
     }
   },
-  extend: {
-    playerLevel: 0
-  }
 };
 
 const game = new Phaser.Game(config);
 game.playerHealth = 100;
+game.isPaused = false;
+game.elementAmounts = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0
+];
