@@ -22,3 +22,9 @@ const config = {
 const game = new Phaser.Game(config);
 game.playerHealth = 100;
 game.isPaused = false;
+game.elementAmounts = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0
+];

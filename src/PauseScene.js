@@ -15,13 +15,6 @@ export default class PauseScene extends Phaser.Scene {
             "K : ", "Ca: ",
         ];
 
-        var amounts = [
-            0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0
-        ];
-
         var descriptions = [
             "Hydrogen - very flammable",
             "    ",
@@ -87,7 +80,7 @@ export default class PauseScene extends Phaser.Scene {
             if (elements[i] != "    ") {
                 t += 7;
                 this.add.text(
-                    100+65*m, 300 + c*60, elements[i] + +amounts[i], {
+                    100+65*m, 300 + c*60, elements[i] + this.game.elementAmounts[i], {
                         font: "12px monospace",
                         fill: "#000000",
                         padding: { x: 11, y: 20 },
