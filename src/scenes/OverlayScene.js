@@ -31,11 +31,11 @@ export default class OverlayScene extends Phaser.Scene {
 
   create() {
     var pauseButton = this.add.text(
-      800, 0, '||', {
+      784, 16, '||', {
         font: "18px monospace",
         fill: "#000000",
-        padding: {x: 7, y: 7},
-        backgroundColor: "#cc96ff"
+        padding: {x: 20, y: 20},
+        backgroundColor: "#ffffff"
       })
       .setScrollFactor(0)
       .setDepth(3)
@@ -62,7 +62,7 @@ export default class OverlayScene extends Phaser.Scene {
     const gameWidth = this.game.config.width;
     const gameHeight = this.game.config.height;
 
-    const healthContainer = this.add.sprite(0, gameHeight, 'healthcontainer');
+    const healthContainer = this.add.sprite(16, gameHeight-16, 'healthcontainer');
     healthContainer.setDepth(10).setScrollFactor(0).setOrigin(0, 1).setScale(0.4, 0.4);
     const healthBar = this.add.sprite(healthContainer.x + 46, healthContainer.y - 10, 'healthbar');
     healthBar.setDepth(11).setScrollFactor(0).setOrigin(0, 1).setScale(0.4, 0.4);

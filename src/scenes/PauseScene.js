@@ -71,7 +71,7 @@ export default class PauseScene extends Phaser.Scene {
         background.setOrigin(0, 0);
 
         let close = this.add.text(
-            width/2, height/2-120, 'Return to Game', {
+            width/2, height/2-120, 'Resume Game', {
                 font: "18px monospace",
                 fill: "#000000",
                 padding: { x: 20, y: 10 },
@@ -102,7 +102,7 @@ export default class PauseScene extends Phaser.Scene {
             font: '12px monospace',
             fill: '#000000',
             padding: { x: 20, y: 20 },
-            backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
+            backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[elementIndex])).toString(16) + (255).toString(16)
           })
             .on('pointerdown', () => {
               document.getElementById('element-name').innerHTML = info[elementIndex][0];
