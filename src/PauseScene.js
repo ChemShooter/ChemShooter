@@ -23,7 +23,7 @@ export default class PauseScene extends Phaser.Scene {
         ];
 
         var descriptions = [
-            "Hydrogen",
+            "Hydrogen - very flammable",
             "    ",
             "    ",
             "    ",
