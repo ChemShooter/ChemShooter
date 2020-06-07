@@ -43,6 +43,20 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 	}
 
   destroy() {
+    const frameIndex = Math.floor(Math.random() * 3);
+    let atomicNumber;
+    switch (frameIndex) {
+      case 0: atomicNumber = 8; break;
+      case 1: atomicNumber = 16; break;
+      case 2: atomicNumber = 1; break;
+    }
+
+    const element = this.scene.physics.add.sprite(this.sprite.x, this.sprite.y, 'elementdrops', frameIndex);
+    const elementAmounts = this.scene.game.elementAmounts;
+    this.scene.physics.add.collider(element, this.scene.player.sprite, () => {
+      element.destroy();
+      elementAmounts[atomicNumber - 1] += 1;
+    });
 		super.destroy();
     this.sprite.destroy();
 

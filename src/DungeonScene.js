@@ -35,6 +35,10 @@ export default class DungeonScene extends Phaser.Scene {
       }
     );
     this.load.image('bullet', 'assets/images/bullet.png');
+    this.load.spritesheet('elementdrops', 'assets/images/element_drops.png', {
+      frameWidth: 16,
+      frameHeight: 16
+    });
   }
 
   create() {
@@ -54,7 +58,7 @@ export default class DungeonScene extends Phaser.Scene {
       rooms: {
         width: {min: 15, max: 20, onlyOdd: true},
         height: {min: 15, max: 20, onlyOdd: true},
-				maxRooms: 3
+				maxRooms: this.level * 4
       },
     });
 
@@ -68,6 +72,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     const oldTileset = map.addTilesetImage("mytiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
     const tileset = map.addTilesetImage('tiles', null, 16, 16);
+
     this.groundLayer = map.createBlankDynamicLayer("Ground", tileset).fill(TILES.BLANK);
     this.wallLayer = map.createBlankDynamicLayer("Wall", tileset);
     this.wallLayer.setDepth(1);
@@ -163,9 +168,9 @@ export default class DungeonScene extends Phaser.Scene {
 					  this.scene.restart();
 					});
 				}
-		}); 
+		});
     this.physics.add.collider(this.player.sprite, this.wallGroup);
-	
+
     // Remove bullen when it hits wall
     this.physics.add.collider(this.bullets, this.wallLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
     this.physics.add.collider(this.bullets, this.stuffLayer, (bullet, wall) => { bullet.setActive(false); bullet.setVisible(false); });
