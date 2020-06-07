@@ -5,6 +5,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, { name, walk, idle }) {
     super(scene, x, y);
 
+    this.isDestroyed = false;
     this.enemyName = name;
 
     const anims = scene.anims;
@@ -43,6 +44,8 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 	}
 
   destroy() {
+    if (this.isDestroyed) return;
+    this.isDestroyed = true;
     const frameIndex = Math.floor(Math.random() * 3);
     let atomicNumber;
     switch (frameIndex) {
