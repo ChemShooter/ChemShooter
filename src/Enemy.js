@@ -31,7 +31,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     this.sprite.anims.play(`${name}-enemy-walk`);
 
-		this.healthBar = new HealthBar(scene, x, y);
+		this.healthBar = new HealthBar(scene, x, y, 100 + 0.5 * this.scene.level);
   }
 
   update() {
@@ -49,8 +49,8 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     const frameIndex = Math.floor(Math.random() * 3);
     let atomicNumber;
     switch (frameIndex) {
-      case 0: atomicNumber = 8; break;
-      case 1: atomicNumber = 16; break;
+      case 0: atomicNumber = 16; break;
+      case 1: atomicNumber = 8; break;
       case 2: atomicNumber = 1; break;
     }
 

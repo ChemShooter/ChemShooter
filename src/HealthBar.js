@@ -1,12 +1,12 @@
 // Health Bar for enemies (not player)
 
 export default class HealthBar {
-	constructor (scene, x, y) {
+	constructor (scene, x, y, health = 100) {
     this.healthBar = new Phaser.GameObjects.Graphics(scene);
 
 		this.x = x - 5;
     this.y = y - 5;
-    this.health = 100;
+    this.health = health;
     this.width = 15;
 		this.height = 7;
     this.draw();

@@ -9,50 +9,67 @@ export default class PauseScene extends Phaser.Scene {
 
     create() {
         var elements = [
-            "H : ", "He: ",
-            "Li: ", "Be: ", "B : ", "C : ", "N : ", "O : ", "F : ", "Ne: ",
-            "Na: ", "Mg: ", "Al: ", "Si: ", "P : ", "S : ", "Cl: ", "Ar: ",
-            "K : ", "Ca: ",
+            "H ", "He",
+            "Li", "Be", "B ", "C ", "N ", "O ", "F ", "Ne",
+            "Na", "Mg", "Al", "Si", "P ", "S ", "Cl", "Ar",
+            "K ", "Ca",
         ];
-        
-        var count = this.game.elementAmounts
-        // var count = [
-        //     0, 0, 
-        //     0, 0, 0, 0, 0, 0, 0,
-        //     0, 0, 0, 0, 0, 0, 0, 
-        //     0, 0,
-        // ];
 
-        var info = [
-            "Hydrogen\nAtomic Number:1\nAtomic Weight:1.01",
-            "Helium\nAtomic Number:2\nAtomic Weight:4.01",
-            "Lithium\nAtomic Number:3\nAtomic Weight:6.94",
-            "Beryllium\nAtomic Number:4\nAtomic Weight:9.01",
-            "Boron\nAtomic Number:5\nAtomic Weight:10.81",
-            "Carbon\nAtomic Number:6\nAtomic Weight:12.01",
-            "Nitrogen\nAtomic Number:7\nAtomic Mass:14.01",
-            "Oxygen\nAtomic Number:8\nAtomic Mass:16.00",
-            "Fluorine\nAtomic Number:9nAtomic Mass:19.00",
-            "Neon\nAtomic Number:10\nAtomic Mass:20.18",
-            "Sodium\nAtomic Number:11\nAtomic Mass:22.99",
-            "Magnesium\nAtomic Number:12\nAtomic Mass:24.31",
-            "Aluminum\nAtomic Number:13\nAtomic Mass:26.98",
-            "Silicon\nAtomic Number:14\nAtomic Mass:28.09",
-            "Phosphorus\nAtomic Number:15\nAtomic Mass:30.97",
-            "Sulfur\nAtomic Number:16\nAtomic Mass:32.06",
-            "Chlorine\nAtomic Number:17\nAtomic Mass:35.45",
-            "Argon\nAtomic Number:18\nAtomic Mass:39.95",
-            "Potassium\nAtomic Number:19\nAtomic Mass:39.10",
-            "Calcium\nAtomic Number:20\nAtomic Mass:40.08",
+        var count = this.game.elementAmounts;
+
+        const info = [
+            ["Hydrogen", 1, 1.01],
+            ["Helium",2,4.01],
+            ["Lithium",3,6.94],
+            ["Beryllium",4,9.01],
+            ["Boron",5,10.81],
+            ["Carbon",6,12.01],
+            ["Nitrogen",7,14.01],
+            ["Oxygen",8,16.00],
+            ["Fluorine",9,19.00],
+            ["Neon",10,20.18],
+            ["Sodium",11,22.99],
+            ["Magnesium",12,24.31],
+            ["Aluminum",13,26.98],
+            ["Silicon",14,28.09],
+            ["Phosphorus",15,30.97],
+            ["Sulfur",16,32.06],
+            ["Chlorine",17,35.45],
+            ["Argon",18,39.95],
+            ["Potassium",19,39.10],
+            ["Calcium",20,40.08],
+        ];
+
+        const descriptions = [
+          "Very flammable!",
+          "Makes you sound like a 9 year old!",
+          "Drop this in water and it goes boom!",
+          "Used for high speed aircraft!",
+          "Used in medicine to improve thinking skills!",
+          "Diamonds = graphite = made from carbon!",
+          "Necessary for growing hearty crops!",
+          "It is all around us!",
+          "Makes sure your teeth stays clean!",
+          "Lights up a nightclub at 2 am!",
+          "Season with sodium chloride and pepper!",
+          "Don't confuse this element with manganese!",
+          "The optimal material for planes!",
+          "Found in computer chips!",
+          "It exists in 2 colours, white and red!",
+          "Light up a bonfire with a match to cook some s'mores!",
+          "Do you like the smell of pool water?",
+          "Third most abundant gas in the Earth's atmosphere!",
+          "Don't go bananas over the fact that its found in bananas!",
+          "Makes your bones nice and strong!",
         ]
-        
+
         const { width, height } = this.sys.game.config;
         let background = this.add.sprite(0, 0, 'bgImage');
         background.alpha = 0.5;
         background.setOrigin(0, 0);
 
         let close = this.add.text(
-            width/2, height/2-70, 'Return to Game', {
+            width/2, height/2-120, 'Return to Game', {
                 font: "18px monospace",
                 fill: "#000000",
                 padding: { x: 20, y: 10 },
@@ -67,67 +84,41 @@ export default class PauseScene extends Phaser.Scene {
 
         close.setInteractive();
 
-        // Feels bad to hardcode (it was the best alternative for hackathon)
-        // Better solution will come in the future
-        const hydrogen = this.add.text(
-            85, 300, elements[0] + count[0], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-10*count[0])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[0])
-        });
-        if (count[0] >= 1) 
-            hydrogen.setInteractive()
+        const addElement = (elementIndex) => {
+          let offsetY;
+          if (elementIndex <= 1) offsetY = 250;
+          else if (elementIndex >= 2 && elementIndex <= 9) offsetY = 315;
+          else if (elementIndex < 18) offsetY = 380;
+          else offsetY = 445;
 
+          const columnXOffsets = [112, 177, 307, 372, 437, 502, 567, 632];
+          let offsetX = 112;
+          if (elementIndex === 1) offsetX = 632;
+          else if (elementIndex >= 2) offsetX = columnXOffsets[(elementIndex - 2) % columnXOffsets.length]
 
-        const helium = this.add.text(
-            660, 300, elements[1] + count[1], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[1])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[1])
-        });
-        if (count[1] >= 1) 
-            helium.setInteractive()
+          const element = this.add.text(offsetX, offsetY, elements[elementIndex], {
+            font: '12px monospace',
+            fill: '#000000',
+            padding: { x: 20, y: 20 },
+            backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
+          })
+            .on('pointerdown', () => {
+              document.getElementById('element-name').innerHTML = info[elementIndex][0];
+              document.getElementById('element-atomic-number').innerHTML = info[elementIndex][1];
+              document.getElementById('element-atomic-weight').innerHTML = info[elementIndex][2];
+              document.getElementById('element-obtained').innerHTML = count[elementIndex];
+              document.getElementById('element-description').innerHTML = descriptions[elementIndex];
+            });
 
+          element.setInteractive();
+        }
 
-        const lithium = this.add.text(
-            85, 360, elements[2] + count[2], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[2])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[2])
-        });
-        if (count[2] >= 1) 
-            lithium.setInteractive()
-
-
-        const beryllium = this.add.text(
-            85, 360, elements[2] + count[2], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[2])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[2])
-        });
-        if (count[2] >= 1) 
-            beryllium.setInteractive()
-
-
+        for (let i = 0; i < 20; ++i) {
+          addElement(i);
+        }
 
         // close.on('pointerover', () => { console.log('pointerover'); });
-        
+
         // let i, t;
         // t = 0;
         // var h = toString(16);
@@ -140,7 +131,7 @@ export default class PauseScene extends Phaser.Scene {
         //     if (elements[i] != "    ") {
         //         t += 7;
         //         this.add.text(
-        //             100+65*m, 300 + c*60, elements[i] + +count[i], {
+        //             100+65*m,  250 + c*60, elements[i] + +count[i], {
         //                 font: "12px monospace",
         //                 fill: "#000000",
         //                 padding: { x: 11, y: 20 },
@@ -150,9 +141,9 @@ export default class PauseScene extends Phaser.Scene {
         //         .on('pointerdown', () => {
         //             console.log(info[i])
         //         });
-        //     } else {   
+        //     } else {
         //         this.add.text(
-        //             100+65*m, 300 + c*60, "     ", {
+        //             100+65*m,  250 + c*60, "     ", {
         //                 padding: { x: 11, y: 20 },
         //                 // backgroundColor: "#" + (255).toString(16) + (225-10*i).toString(16) + (255).toString(16)
         //         });

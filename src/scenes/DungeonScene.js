@@ -21,6 +21,10 @@ export default class DungeonScene extends Phaser.Scene {
     this.level = 0;
   }
 
+  restartScene() {
+    location.reload();
+  }
+
   preload() {
     this.load.image("mytiles", "assets/tilesets/buch-tileset-48px-extruded.png");
     this.load.image("tiles", "assets/tilesets/dungeon.png" );
@@ -56,8 +60,8 @@ export default class DungeonScene extends Phaser.Scene {
       height: 100,
       doorPadding: 3,
       rooms: {
-        width: {min: 15, max: 20, onlyOdd: true},
-        height: {min: 15, max: 20, onlyOdd: true},
+        width: {min: 15, max: 21, onlyOdd: true},
+        height: {min: 15, max: 21, onlyOdd: true},
 				maxRooms: this.level * 4
       },
     });
@@ -206,21 +210,18 @@ export default class DungeonScene extends Phaser.Scene {
       createEnemy(room, MuddyEnemy, 3, 3);
 
       const rand = Math.random();
-      if (rand <= 0.25) {
-        // 25% chance of chest
-        this.stuffLayer.putTileAt(TILES.CHEST, room.centerX, room.centerY);
-      } else if (rand <= 0.5) {
+      if (rand <= 0.5) {
         // 50% chance of a pot anywhere in the room... except don't block a door!
         const x = Phaser.Math.Between(room.left + 2, room.right - 2);
         const y = Phaser.Math.Between(room.top + 2, room.bottom - 2);
-        this.stuffLayer.weightedRandomize(x, y, 1, 1, TILES.BOX);
+        this.stuffLayer.putTileAt(TILES.BOX, x, y);
       } else {
         // 25% of either 2 or 4 towers, depending on the room size
         if (room.height >= 9) {
-          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 1, room.centerY + 1);
-          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX + 1, room.centerY + 1);
-          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 1, room.centerY - 2);
-          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX + 1, room.centerY - 2);
+          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 3, room.centerY + 3);
+          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX + 3, room.centerY + 3);
+          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 3, room.centerY - 4);
+          this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX + 3, room.centerY - 4);
         } else {
           this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 1, room.centerY - 1);
           this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX + 1, room.centerY - 1);
