@@ -14,13 +14,14 @@ export default class PauseScene extends Phaser.Scene {
             "Na: ", "Mg: ", "Al: ", "Si: ", "P : ", "S : ", "Cl: ", "Ar: ",
             "K : ", "Ca: ",
         ];
-
-        var count = [
-            0, 0, 
-            0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 
-            0, 0,
-        ];
+        
+        var count = this.game.elementAmounts
+        // var count = [
+        //     0, 0, 
+        //     0, 0, 0, 0, 0, 0, 0,
+        //     0, 0, 0, 0, 0, 0, 0, 
+        //     0, 0,
+        // ];
 
         var info = [
             "Hydrogen\nAtomic Number:1\nAtomic Weight:1.01",
@@ -68,17 +69,48 @@ export default class PauseScene extends Phaser.Scene {
 
         
         const hydrogen = this.add.text(
-            100, 300, elements[0] + ":" + count[0], {
+            85, 300, elements[0] + count[0], {
                 font: "12px monospace",
                 fill: "#000000",
                 padding: { x: 11, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (225-t).toString(16) + (255).toString(16)
+                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-10*count[0])).toString(16) + (255).toString(16)
         })
-        .setInteractive()
         .on('pointerdown', () => {
             console.log(info[0])
         });
-        close.on('pointerover', () => { console.log('pointerover'); });
+        if (count[0] >= 1) 
+            hydrogen.setInteractive()
+
+
+        const helium = this.add.text(
+            660, 300, elements[1] + count[1], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 11, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[1])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[1])
+        });
+        if (count[1] >= 1) 
+            helium.setInteractive()
+
+
+        const lithium = this.add.text(
+            85, 360, elements[2] + count[2], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 11, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[2])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[2])
+        });
+        if (count[2] >= 1) 
+            lithium.setInteractive()
+
+
+        // close.on('pointerover', () => { console.log('pointerover'); });
         
         // let i, t;
         // t = 0;
