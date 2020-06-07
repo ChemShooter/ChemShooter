@@ -41,7 +41,7 @@ export default class DungeonScene extends Phaser.Scene {
     ++this.level;
     this.hasPlayerReachedStairs = false;
 
-    
+    this.scene.launch('OverlayScene', this);
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
