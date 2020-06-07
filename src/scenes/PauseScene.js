@@ -67,7 +67,8 @@ export default class PauseScene extends Phaser.Scene {
 
         close.setInteractive();
 
-        
+        // Feels bad to hardcode (it was the best alternative for hackathon)
+        // Better solution will come in the future
         const hydrogen = this.add.text(
             85, 300, elements[0] + count[0], {
                 font: "12px monospace",
@@ -108,6 +109,21 @@ export default class PauseScene extends Phaser.Scene {
         });
         if (count[2] >= 1) 
             lithium.setInteractive()
+
+
+        const beryllium = this.add.text(
+            85, 360, elements[2] + count[2], {
+                font: "12px monospace",
+                fill: "#000000",
+                padding: { x: 11, y: 20 },
+                backgroundColor: "#" + (255).toString(16) + (Math.max(127, 255-2*count[2])).toString(16) + (255).toString(16)
+        })
+        .on('pointerdown', () => {
+            console.log(info[2])
+        });
+        if (count[2] >= 1) 
+            beryllium.setInteractive()
+
 
 
         // close.on('pointerover', () => { console.log('pointerover'); });
