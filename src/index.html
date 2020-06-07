@@ -2,37 +2,49 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap" rel="stylesheet">
 		<title>Game</title>
 		<style type="text/css">
 				* {
 					box-sizing: border-box;;
 				}
+
 				body {
 					margin: 0;
 					background-color: #111;
 					color: white;
+					font-family: 'Noto Sans KR', sans-serif;
 				}
-        #ar-container {
-					margin: 50px;
-					height: 600px;
-					flex-grow: 1;
-        }
+
         #ar-container img{
 					width: 100%;
 					height: auto;
-        }
+				}
+
 				#wrapper {
 					width: 100vw;
 					display: flex;
 				}
 
-				#game-container {
-					flex-grow: 2;
-				}
-
 				#ar-wrapper {
 					display: flex;
 					flex-direction: column;
+					padding: 10px;
+				}
+
+				#element-name {
+					font-weight: 900;
+					font-size: 25px;
+					text-align: center;
+				}
+
+				#element-description {
+					text-align: center;
+				}
+
+				#element-properties {
+					margin-top: 10px;
+					flex-grow: 1;
 				}
 		</style>
 		<script src="main.js"></script>
@@ -42,9 +54,10 @@
 			<div id="game-container"></div>
 			<div id="ar-wrapper">
 				<img src="https://i.ibb.co/P9j3Gd7/marker-arcore-1.png" alt="QR Code"/>
-				<div id="element-description">
-					<div id="element-name">Select an element in the pause menu to
-						view its stats!</div>
+				<div id="element-properties">
+					<div id="element-name"></div>
+					<div id="element-description">Select an element in the pause menu to
+						view its stats!</div><br/>
 					<strong>Atomic number: </strong><span
 					id="element-atomic-number">N/A</span><br/>
 					<strong>Atomic Weight: </strong><span

@@ -15,15 +15,9 @@ export default class PauseScene extends Phaser.Scene {
             "K ", "Ca",
         ];
 
-        var count = this.game.elementAmounts
-        // var count = [
-        //     0, 0,
-        //     0, 0, 0, 0, 0, 0, 0,
-        //     0, 0, 0, 0, 0, 0, 0,
-        //     0, 0,
-        // ];
+        var count = this.game.elementAmounts;
 
-        var info = [
+        const info = [
             ["Hydrogen", 1, 1.01],
             ["Helium",2,4.01],
             ["Lithium",3,6.94],
@@ -44,6 +38,29 @@ export default class PauseScene extends Phaser.Scene {
             ["Argon",18,39.95],
             ["Potassium",19,39.10],
             ["Calcium",20,40.08],
+        ];
+
+        const descriptions = [
+          "Very flammable!",
+          "Makes you sound like a 9 year old!",
+          "Drop this in water and it goes boom!",
+          "Used for high speed aircraft!",
+          "Used in medicine to improve thinking skills!",
+          "Diamonds = graphite = made from carbon!",
+          "Necessary for growing hearty crops!",
+          "It is all around us!",
+          "Makes sure your teeth stays clean!",
+          "Lights up a nightclub at 2 am!",
+          "Season with sodium chloride and pepper!",
+          "Don't confuse this element with manganese!",
+          "The optimal material for planes!",
+          "Found in computer chips!",
+          "It exists in 2 colours, white and red!",
+          "Light up a bonfire with a match to cook some s'mores!",
+          "Do you like the smell of pool water?",
+          "Third most abundant gas in the Earth's atmosphere!",
+          "Don't go bananas over the fact that its found in bananas!",
+          "Makes your bones nice and strong!",
         ]
 
         const { width, height } = this.sys.game.config;
@@ -90,7 +107,7 @@ export default class PauseScene extends Phaser.Scene {
               document.getElementById('element-atomic-number').innerHTML = info[elementIndex][1];
               document.getElementById('element-atomic-weight').innerHTML = info[elementIndex][2];
               document.getElementById('element-obtained').innerHTML = count[elementIndex];
-              // document.getElementById('element-description').innerHTML = info[elementIndex];
+              document.getElementById('element-description').innerHTML = descriptions[elementIndex];
             });
 
           element.setInteractive();
@@ -99,290 +116,6 @@ export default class PauseScene extends Phaser.Scene {
         for (let i = 0; i < 20; ++i) {
           addElement(i);
         }
-
-        /*
-        // Feels bad to hardcode
-        // Better solution will come in the future
-        const hydrogen = this.add.text(
-            112,  250, elements[0], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[0])
-        });
-        if (count[0] >= 1)
-            hydrogen.setInteractive()
-
-
-        const helium = this.add.text(
-            632,  250, elements[1], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[1])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[1])
-        });
-        if (count[1] >= 1)
-            helium.setInteractive()
-
-
-        const lithium = this.add.text(
-            112, 315, elements[2], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[2])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[2])
-        });
-        if (count[2] >= 1)
-            lithium.setInteractive()
-
-
-        const beryllium = this.add.text(
-            177, 315, elements[3], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[3])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[3])
-        });
-        if (count[3] >= 1)
-            beryllium.setInteractive()
-
-
-        const boron = this.add.text(
-            307, 315, elements[4], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[4])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[4])
-        });
-        if (count[4] >= 1)
-            boron.setInteractive()
-
-
-        const carbon = this.add.text(
-            372, 315, elements[5], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[5])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[5])
-        });
-        if (count[5] >= 1)
-        carbon.setInteractive()
-
-
-        const nitrogen = this.add.text(
-            437, 315, elements[6], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[6])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[6])
-        });
-        if (count[6] >= 1)
-        nitrogen.setInteractive()
-
-
-        const oxygen = this.add.text(
-            502, 315, elements[7], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[7])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[7])
-        });
-        if (count[7] >= 1)
-        oxygen.setInteractive()
-
-
-        const fluorine = this.add.text(
-            567, 315, elements[8], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[8])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[8])
-        });
-        if (count[8] >= 1)
-        fluorine.setInteractive()
-
-
-        const neon = this.add.text(
-            632, 315, elements[9], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[9])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[9])
-        });
-        if (count[9] >= 1)
-        neon.setInteractive()
-
-
-        const sodium = this.add.text(
-            112, 380, elements[10], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[10])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[10])
-        });
-        if (count[10] >= 1)
-        sodium.setInteractive()
-
-
-        const magnesium = this.add.text(
-            177, 380, elements[11], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[11])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[11])
-        });
-        if (count[11] >= 1)
-        magnesium.setInteractive()
-
-
-        const aluminum = this.add.text(
-            307, 380, elements[12], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[12])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[12])
-        });
-        if (count[12] >= 1)
-        aluminum.setInteractive()
-
-
-        const silicon = this.add.text(
-            372, 380, elements[13], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[13])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[13])
-        });
-        if (count[13] >= 1)
-        silicon.setInteractive()
-
-
-        const phosphorus = this.add.text(
-            437, 380, elements[14], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[14])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[14])
-        });
-        if (count[14] >= 1)
-        phosphorus.setInteractive()
-
-
-        const sulfur = this.add.text(
-            502, 380, elements[15], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[15])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[15])
-        });
-        if (count[15] >= 1)
-        sulfur.setInteractive()
-
-
-        const chlorine = this.add.text(
-            567, 380, elements[16], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[16])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[16])
-        });
-        if (count[16] >= 1)
-        chlorine.setInteractive()
-
-
-        const argon = this.add.text(
-            632, 380, elements[17], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[17])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[17])
-        });
-        if (count[17] >= 1)
-        argon.setInteractive()
-
-
-        const potassium = this.add.text(
-            112, 445, elements[18], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[18])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[18])
-        });
-        if (count[18] >= 1)
-        potassium.setInteractive()
-
-
-        const calcium = this.add.text(
-            177, 445, elements[19], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[19])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            console.log(info[19])
-        });
-        if (count[19] >= 1)
-        calcium.setInteractive()
-
-         */
 
         // close.on('pointerover', () => { console.log('pointerover'); });
 
