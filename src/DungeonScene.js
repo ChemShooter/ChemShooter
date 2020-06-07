@@ -39,7 +39,6 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   create() {
-    // console.log(pointer.event);
     this.level++;
     this.hasPlayerReachedStairs = false;
 
@@ -84,8 +83,6 @@ export default class DungeonScene extends Phaser.Scene {
         height: {min: 15, max: 20, onlyOdd: true}
       },
     });
-
-    this.dungeon.drawToConsole({});
 
     // Creating a blank tilemap with dimensions matching the dungeon
     const map = this.make.tilemap({
