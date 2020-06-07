@@ -7,7 +7,7 @@ export default class HealthBar {
 		this.x = x - 5;
     this.y = y - 5;
     this.health = 100;
-    this.width = 10;
+    this.width = 15;
 		this.height = 7;
     this.draw();
     scene.add.existing(this.healthBar);
