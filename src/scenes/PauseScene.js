@@ -16,38 +16,55 @@ export default class PauseScene extends Phaser.Scene {
             "Na", "Mg", "Al", "Si", "P ", "S ", "Cl", "Ar",
             "K ", "Ca",
         ];
-        
-        var count = this.game.elementAmounts
-        // var count = [
-        //     0, 0, 
-        //     0, 0, 0, 0, 0, 0, 0,
-        //     0, 0, 0, 0, 0, 0, 0, 
-        //     0, 0,
-        // ];
 
-        var info = [
-            "Hydrogen\nAtomic Number: 1\nAtomic Weight: 1.01\nObtained: " + count[0],
-            "Helium\nAtomic Number:2\nAtomic Weight:4.01\nObtained: " + count[1],
-            "Lithium\nAtomic Number:3\nAtomic Weight:6.94\nObtained: " + count[2],
-            "Beryllium\nAtomic Number:4\nAtomic Weight:9.01\nObtained: " + count[3],
-            "Boron\nAtomic Number:5\nAtomic Weight:10.81\nObtained: " + count[4],
-            "Carbon\nAtomic Number:6\nAtomic Weight:12.01\nObtained: " + count[5],
-            "Nitrogen\nAtomic Number:7\nAtomic Mass:14.01\nObtained: " + count[6],
-            "Oxygen\nAtomic Number:8\nAtomic Mass:16.00\nObtained: " + count[7],
-            "Fluorine\nAtomic Number:9nAtomic Mass:19.00\nObtained: " + count[8],
-            "Neon\nAtomic Number:10\nAtomic Mass:20.18\nObtained: " + count[9],
-            "Sodium\nAtomic Number:11\nAtomic Mass:22.99\nObtained: " + count[10],
-            "Magnesium\nAtomic Number:12\nAtomic Mass:24.31\nObtained: " + count[11],
-            "Aluminum\nAtomic Number:13\nAtomic Mass:26.98\nObtained: " + count[12],
-            "Silicon\nAtomic Number:14\nAtomic Mass:28.09\nObtained: " + count[13],
-            "Phosphorus\nAtomic Number:15\nAtomic Mass:30.97\nObtained: " + count[14],
-            "Sulfur\nAtomic Number:16\nAtomic Mass:32.06\nObtained: " + count[15],
-            "Chlorine\nAtomic Number:17\nAtomic Mass:35.45\nObtained: " + count[16],
-            "Argon\nAtomic Number:18\nAtomic Mass:39.95\nObtained: " + count[17],
-            "Potassium\nAtomic Number:19\nAtomic Mass:39.10\nObtained: " + count[18],
-            "Calcium\nAtomic Number:20\nAtomic Mass:40.08\nObtained: " + count[19],
+        var count = this.game.elementAmounts;
+
+        const info = [
+            ["Hydrogen", 1, 1.01],
+            ["Helium",2,4.01],
+            ["Lithium",3,6.94],
+            ["Beryllium",4,9.01],
+            ["Boron",5,10.81],
+            ["Carbon",6,12.01],
+            ["Nitrogen",7,14.01],
+            ["Oxygen",8,16.00],
+            ["Fluorine",9,19.00],
+            ["Neon",10,20.18],
+            ["Sodium",11,22.99],
+            ["Magnesium",12,24.31],
+            ["Aluminum",13,26.98],
+            ["Silicon",14,28.09],
+            ["Phosphorus",15,30.97],
+            ["Sulfur",16,32.06],
+            ["Chlorine",17,35.45],
+            ["Argon",18,39.95],
+            ["Potassium",19,39.10],
+            ["Calcium",20,40.08],
+        ];
+
+        const descriptions = [
+          "Very flammable!",
+          "Makes you sound like a 9 year old!",
+          "Drop this in water and it goes boom!",
+          "Used for high speed aircraft!",
+          "Used in medicine to improve thinking skills!",
+          "Diamonds = graphite = made from carbon!",
+          "Necessary for growing hearty crops!",
+          "It is all around us!",
+          "Makes sure your teeth stays clean!",
+          "Lights up a nightclub at 2 am!",
+          "Season with sodium chloride and pepper!",
+          "Don't confuse this element with manganese!",
+          "The optimal material for planes!",
+          "Found in computer chips!",
+          "It exists in 2 colours, white and red!",
+          "Light up a bonfire with a match to cook some s'mores!",
+          "Do you like the smell of pool water?",
+          "Third most abundant gas in the Earth's atmosphere!",
+          "Don't go bananas over the fact that its found in bananas!",
+          "Makes your bones nice and strong!",
         ]
-        
+
         const { width, height } = this.sys.game.config;
         let background = this.add.sprite(0, 0, 'bgImage');
         background.alpha = 0.5;
@@ -69,327 +86,44 @@ export default class PauseScene extends Phaser.Scene {
 
         close.setInteractive();
 
-        // Feels bad to hardcode
-        // Better solution will come in the future
-        const hydrogen = this.add.text(
-            112,  250, elements[0], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[0] >= 1)
-                console.log(info[0])
-            else
-                console.log("You haven't found this element")
-        });
-        hydrogen.setInteractive()
+        const addElement = (elementIndex) => {
+          let offsetY;
+          if (elementIndex <= 1) offsetY = 250;
+          else if (elementIndex >= 2 && elementIndex <= 9) offsetY = 315;
+          else if (elementIndex < 18) offsetY = 380;
+          else offsetY = 445;
 
+          const columnXOffsets = [112, 177, 307, 372, 437, 502, 567, 632];
+          let offsetX = 112;
+          if (elementIndex === 1) offsetX = 632;
+          else if (elementIndex >= 2) offsetX = columnXOffsets[(elementIndex - 2) % columnXOffsets.length]
 
-        const helium = this.add.text(
-            632,  250, elements[1], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[1])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[1] >= 1)
-                console.log(info[1])
-            else
-                console.log("You haven't found this element")
-        }); 
-        helium.setInteractive()
+          const element = this.add.text(offsetX, offsetY, elements[elementIndex], {
+            font: '12px monospace',
+            fill: '#000000',
+            padding: { x: 20, y: 20 },
+            backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[0])).toString(16) + (255).toString(16)
+          })
+            .on('pointerdown', () => {
+              document.getElementById('element-name').innerHTML = info[elementIndex][0];
+              document.getElementById('element-atomic-number').innerHTML = info[elementIndex][1];
+              document.getElementById('element-atomic-weight').innerHTML = info[elementIndex][2];
+              document.getElementById('element-obtained').innerHTML = count[elementIndex];
+              document.getElementById('element-description').innerHTML = descriptions[elementIndex];
+              const elementChemicalSymbol = document.getElementById('element-chemical-symbol');
+              elementChemicalSymbol.style.display = 'flex';
+              elementChemicalSymbol.innerHTML = elements[elementIndex].trim();
+            });
 
-        const lithium = this.add.text(
-            112, 315, elements[2], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[2])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[2] >= 1)
-                console.log(info[2])
-            else
-                console.log("You haven't found this element")
-        });
-        lithium.setInteractive()
+          element.setInteractive();
+        }
 
-        const beryllium = this.add.text(
-            177, 315, elements[3], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[3])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[3] >= 1)
-                console.log(info[3])
-            else
-                console.log("You haven't found this element")
-        });
-        beryllium.setInteractive()
-
-
-        const boron = this.add.text(
-            307, 315, elements[4], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[4])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[4] >= 1)
-                console.log(info[4])
-            else
-                console.log("You haven't found this element")
-        });
-        boron.setInteractive()
-
-
-        const carbon = this.add.text(
-            372, 315, elements[5], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[5])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[5] >= 1)
-                console.log(info[5])
-            else
-                console.log("You haven't found this element")
-        });
-        carbon.setInteractive()
-
-
-        const nitrogen = this.add.text(
-            437, 315, elements[6], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[6])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[6] >= 1)
-                console.log(info[6])
-            else
-                console.log("You haven't found this element")
-        });
-        nitrogen.setInteractive()
-
-
-        const oxygen = this.add.text(
-            502, 315, elements[7], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[7])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[7] >= 1)
-                console.log(info[7])
-            else
-                console.log("You haven't found this element")
-        });
-        oxygen.setInteractive()
-
-
-        const fluorine = this.add.text(
-            567, 315, elements[8], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[8])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[8] >= 1)
-                console.log(info[8])
-            else
-                console.log("You haven't found this element")
-        });
-        fluorine.setInteractive()
-
-
-        const neon = this.add.text(
-            632, 315, elements[9], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[9])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[9] >= 1)
-                console.log(info[9])
-            else
-                console.log("You haven't found this element")
-        });
-        neon.setInteractive()
-
-
-
-        const sodium = this.add.text(
-            112, 380, elements[10], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[10])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[10] >= 1)
-                console.log(info[10])
-            else
-                console.log("You haven't found this element")
-        });
-        sodium.setInteractive()
-
-
-        const magnesium = this.add.text(
-            177, 380, elements[11], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[11])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[11] >= 1)
-                console.log(info[11])
-            else
-                console.log("You haven't found this element")
-        });
-        magnesium.setInteractive()
-
-        const aluminum = this.add.text(
-            307, 380, elements[12], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[12])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[12] >= 1)
-                console.log(info[12])
-            else
-                console.log("You haven't found this element")
-        });
-        aluminum.setInteractive()
-
-
-        const silicon = this.add.text(
-            372, 380, elements[13], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[13])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[13] >= 1)
-                console.log(info[13])
-            else
-                console.log("You haven't found this element")
-        });
-        silicon.setInteractive()
-
-
-        const phosphorus = this.add.text(
-            437, 380, elements[14], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[14])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[14] >= 1)
-                console.log(info[14])
-            else
-                console.log("You haven't found this element")
-        });
-        phosphorus.setInteractive()
-
-
-        const sulfur = this.add.text(
-            502, 380, elements[15], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[15])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[15] >= 1)
-                console.log(info[15])
-            else
-                console.log("You haven't found this element")
-        });
-        sulfur.setInteractive()
-
-
-        const chlorine = this.add.text(
-            567, 380, elements[16], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[16])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[16] >= 1)
-                console.log(info[16])
-            else
-                console.log("You haven't found this element")
-        });
-        chlorine.setInteractive()
-
-
-        const argon = this.add.text(
-            632, 380, elements[17], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[17])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[17] >= 1)
-                console.log(info[17])
-            else
-                console.log("You haven't found this element")
-        });
-        argon.setInteractive()
-
-
-        const potassium = this.add.text(
-            112, 445, elements[18], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[18])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[18] >= 1)
-                console.log(info[18])
-            else
-                console.log("You haven't found this element")
-        });
-        potassium.setInteractive()
-
-
-        const calcium = this.add.text(
-            177, 445, elements[19], {
-                font: "12px monospace",
-                fill: "#000000",
-                padding: { x: 20, y: 20 },
-                backgroundColor: "#" + (255).toString(16) + (Math.max(125, 255-2*count[19])).toString(16) + (255).toString(16)
-        })
-        .on('pointerdown', () => {
-            if (count[19] >= 1)
-                console.log(info[19])
-            else
-                console.log("You haven't found this element")
-        });
-        calcium.setInteractive()
+        for (let i = 0; i < 20; ++i) {
+          addElement(i);
+        }
 
         // close.on('pointerover', () => { console.log('pointerover'); });
-        
+
         // let i, t;
         // t = 0;
         // var h = toString(16);
@@ -412,7 +146,7 @@ export default class PauseScene extends Phaser.Scene {
         //         .on('pointerdown', () => {
         //             console.log(info[i])
         //         });
-        //     } else {   
+        //     } else {
         //         this.add.text(
         //             100+65*m,  250 + c*60, "     ", {
         //                 padding: { x: 11, y: 20 },
