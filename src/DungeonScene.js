@@ -325,7 +325,8 @@ export default class DungeonScene extends Phaser.Scene {
       const enemyY = enemy.sprite.y;
       const enemyTileX = this.groundLayer.worldToTileX(enemyX);
       const enemyTileY = this.groundLayer.worldToTileY(enemyY);
-      if (this.dungeon.getRoomAt(enemyTileX, enemyTileY) !== playerRoom) return;
+      if (this.dungeon.getRoomAt(enemyTileX, enemyTileY) !== playerRoom)
+        this.physics.velocityFromRotation(enemy.rotation, 0, enemy.sprite.body.velocity);
       const playerX = this.player.sprite.x;
       const playerY = this.player.sprite.y;
       const distance = Phaser.Math.Distance.Between(playerX, playerY, enemyX, enemyY);
