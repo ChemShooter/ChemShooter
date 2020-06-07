@@ -207,7 +207,7 @@ export default class DungeonScene extends Phaser.Scene {
 					enemy.destroy();
 					this.enemyGroup.remove(enemy);
 				}
-      }, 200));
+      }, 300));
     }
 
     otherRooms.forEach(room => {
