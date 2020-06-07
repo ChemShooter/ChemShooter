@@ -46,6 +46,24 @@
 					margin-top: 10px;
 					flex-grow: 1;
 				}
+
+				#element-description-body {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+				}
+
+				#element-formula-button {
+					padding: 10px;
+					background-color: green;
+					border-radius: 5px;
+				}
+
+				#element-formula-button:hover {
+					background-color: darkgreen;
+					cursor: pointer;
+				}
 		</style>
 		<script src="main.js"></script>
 	</head>
@@ -62,12 +80,21 @@
 					<div id="element-name"></div>
 					<div id="element-description">Select an element in the pause menu to
 						view its stats!</div><br/>
-					<strong>Atomic number: </strong><span
-					id="element-atomic-number">N/A</span><br/>
-					<strong>Atomic Weight: </strong><span
-					id="element-atomic-weight">N/A</span><br/>
-					<strong>Obtained: </strong><span id="element-obtained">N/A
-				</span><br/>
+					<div id="element-description-body">
+						<div id="element-stats">
+							<strong>Atomic number: </strong><span
+							id="element-atomic-number">N/A</span><br/>
+							<strong>Atomic Weight: </strong><span
+							id="element-atomic-weight">N/A</span><br/>
+							<strong># Obtained: </strong><span
+							id="element-obtained">N/A</span>
+						</div>
+						<div id="element-formula-button" onclick="
+							alert('Coming soon...\nHere you would see various different upgrades you could make with this element in our game, such as creating a new weapon, crafting new items, or even upgrading your character!');
+						">
+							View Formulas
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
