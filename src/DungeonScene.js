@@ -248,14 +248,6 @@ export default class DungeonScene extends Phaser.Scene {
     // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.startFollow(this.player.sprite);
-
-    // Bullets stuff
-    this.bullets = this.physics.add.group({
-        defaultKey: 'bullet',
-        maxSize: 20
-    });
-
-    this.input.on('pointerdown', this.shoot, this);
   }
 
   shoot(pointer) {
