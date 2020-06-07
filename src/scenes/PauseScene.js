@@ -108,6 +108,9 @@ export default class PauseScene extends Phaser.Scene {
               document.getElementById('element-atomic-weight').innerHTML = info[elementIndex][2];
               document.getElementById('element-obtained').innerHTML = count[elementIndex];
               document.getElementById('element-description').innerHTML = descriptions[elementIndex];
+              const elementChemicalSymbol = document.getElementById('element-chemical-symbol');
+              elementChemicalSymbol.style.display = 'flex';
+              elementChemicalSymbol.innerHTML = elements[elementIndex].trim();
             });
 
           element.setInteractive();

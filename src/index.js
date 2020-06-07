@@ -5,9 +5,6 @@ import OverlayScene from "./scenes/OverlayScene";
 import IntroScene from "./scenes/IntroScene";
 import GameOverScene from "./scenes/GameOverScene";
 
-export function showFormulas() {
-}
-
 const config = {
   type: Phaser.AUTO, // Which renderer to use
   width: 800, // Canvas width in pixels

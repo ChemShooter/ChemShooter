@@ -45,6 +45,8 @@
 				#element-properties {
 					margin-top: 10px;
 					flex-grow: 1;
+					display: flex;
+					flex-direction: column;
 				}
 
 				#element-description-body {
@@ -64,6 +66,24 @@
 					background-color: darkgreen;
 					cursor: pointer;
 				}
+
+				#element-chemical-symbol {
+					border: 2px solid white;
+					align-items: center;
+					justify-content: center;
+					height: 30px;
+					font-weight: 900;
+					width: 30px;
+					margin-top: 5px;
+					margin-left: 5px;
+					display: none;
+				}
+
+				#element-header {
+					display: flex;
+					flex-direction: row;
+					align-self: center;
+				}
 		</style>
 		<script src="main.js"></script>
 	</head>
@@ -73,7 +93,10 @@
 			<div id="ar-wrapper">
 				<img src="https://i.ibb.co/P9j3Gd7/marker-arcore-1.png" alt="QR Code"/>
 				<div id="element-properties">
-					<div id="element-name"></div>
+					<div id="element-header">
+						<div id="element-name"></div>
+						<div id="element-chemical-symbol"></div>
+					</div>
 					<div id="element-description">Select an element in the pause menu to
 						view its stats!</div><br/>
 					<div id="element-description-body">
