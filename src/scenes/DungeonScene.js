@@ -21,6 +21,10 @@ export default class DungeonScene extends Phaser.Scene {
     this.level = 0;
   }
 
+  restartScene() {
+    location.reload();
+  }
+
   preload() {
     this.load.image("mytiles", "assets/tilesets/buch-tileset-48px-extruded.png");
     this.load.image("tiles", "assets/tilesets/dungeon.png" );

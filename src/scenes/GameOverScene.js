@@ -7,6 +7,10 @@ export default class GameOverScene extends Phaser.Scene {
     this.load.image("bgImage", "assets/images/main_menu_scene.png");
   }
 
+  init(restartDungeonScene) {
+    this.restartDungeonScene = restartDungeonScene;
+  }
+
   create() {
     const {width, height} = this.sys.game.config;
     let background = this.add.sprite(0, 0, 'bgImage');
@@ -22,15 +26,16 @@ export default class GameOverScene extends Phaser.Scene {
       .setInteractive()
       .setOrigin(0.5, 0.5)
       .on('pointerdown', () => {
-        this.scene.game.playerHealth = 100;
-        this.scene.game.playerLevel = 0;
-        this.scene.game.elementAmounts = [
+        this.game.playerHealth = 100;
+        this.game.playerLevel = 0;
+        this.game.elementAmounts = [
           0, 0,
           0, 0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0, 0,
           0, 0
         ];
-        this.scene.launch('DungeonScene');
+
+        this.restartDungeonScene();
       });
   }
 }
