@@ -73,7 +73,7 @@ export default class OverlayScene extends Phaser.Scene {
 
     // Help text that has a "fixed" position on the screen
     this.add
-      .text(16, 16, `Find the stairs. Go deeper.\nCurrent level: ${this.dungeonScene.level}`, {
+      .text(16, 16, `Find the stairs. Go deeper.\nCurrent floor: ${this.dungeonScene.level}`, {
         font: "18px monospace",
         fill: "#000000",
         padding: {x: 20, y: 10},
