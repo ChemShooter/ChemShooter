@@ -6,6 +6,7 @@ import MuddyEnemy from "./enemies/MuddyEnemy";
 import SwampyEnemy from "./enemies/SwampyEnemy";
 import TILES from "./TileMapping.js";
 import TilemapVisibility from "./TilemapVisibility.js";
+import _ from 'lodash';
 
 /**
  * Scene that generates a new dungeon
@@ -173,6 +174,14 @@ export default class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(this.player.sprite, this.stuffLayer);
     this.physics.add.collider(this.player.sprite, this.wallGroup);
 
+    // Bullets stuff
+    this.bullets = this.physics.add.group({
+        defaultKey: 'bullet',
+        maxSize: 20
+    });
+
+    this.input.on('pointerdown', this.shoot, this);
+ 
     const createEnemy = (room, enemyClass, offsetX, offsetY) => {
       const enemyX = map.tileToWorldX(room.centerX + offsetX);
       const enemyY = map.tileToWorldX(room.centerY + offsetY);
@@ -186,6 +195,14 @@ export default class DungeonScene extends Phaser.Scene {
       this.physics.add.collider(enemy.sprite, this.player.sprite, () => {
         this.player.decreaseHealth(1);
       });
+      this.physics.add.collider(enemy.sprite, this.bullets, _.throttle((e, bullet) => {
+				bullet.setActive(false);
+				bullet.setVisible(false);
+        if (enemy.decreaseHealth(15)) {
+					enemy.destroy();
+					this.enemyGroup.remove(enemy);
+				}
+      }, 300));
     }
 
     otherRooms.forEach(room => {
@@ -276,14 +293,7 @@ export default class DungeonScene extends Phaser.Scene {
       })
       .setScrollFactor(0).setDepth(3);
 
-    // Bullets stuff
-    this.bullets = this.physics.add.group({
-        defaultKey: 'bullet',
-        maxSize: 20
-    });
-
-    this.input.on('pointerdown', this.shoot, this);
-  }
+ }
 
   shoot(pointer) {
     if (!mousehover) {
