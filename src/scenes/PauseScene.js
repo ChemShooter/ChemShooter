@@ -52,7 +52,7 @@ export default class PauseScene extends Phaser.Scene {
           "Necessary for growing hearty crops!",
           "It is all around us!",
           "Makes sure your teeth stays clean!",
-          "Lights up a nightclub at 2 am!",
+          "You've probably seen a sign lit with neon; they have extremely vibrant colors!",
           "Season with sodium chloride and pepper!",
           "Don't confuse this element with manganese!",
           "The optimal material for planes!",
